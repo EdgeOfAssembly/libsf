@@ -1,0 +1,519 @@
+\doxysection{tests/test\+\_\+debug\+\_\+c23.c File Reference}
+\hypertarget{test__debug__c23_8c}{}\label{test__debug__c23_8c}\index{tests/test\_debug\_c23.c@{tests/test\_debug\_c23.c}}
+{\ttfamily \#include "{}../debug.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for test\+\_\+debug\+\_\+c23.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structTestStruct}{Test\+Struct}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{test__debug__c23_8c_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\+\_\+\+LEVEL}}~5
+\item 
+\#define \mbox{\hyperlink{test__debug__c23_8c_af19cf2a82cf274bf7c72dfa8286bc36e}{TEST\+\_\+\+START}}(name)
+\item 
+\#define \mbox{\hyperlink{test__debug__c23_8c_aa3ff270639ce6af6d1614f15ee082a79}{TEST\+\_\+\+PASS}}(name)
+\item 
+\#define \mbox{\hyperlink{test__debug__c23_8c_a5a78d3750a4a21666211d4b30a5c45e8}{TEST\+\_\+\+FAIL}}(name,  reason)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a399d22ae62256fd4eae26659481daa0e}{test\+\_\+log\+\_\+levels}} (void)
+\item 
+int \mbox{\hyperlink{test__debug__c23_8c_ac99394a87dbc4834c706e76a021bf241}{test\+\_\+function\+\_\+with\+\_\+tracing}} (int n)
+\item 
+double \mbox{\hyperlink{test__debug__c23_8c_a71f8d45958443cd5674440c49ef24ddb}{test\+\_\+function\+\_\+double\+\_\+return}} (double x)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{test__debug__c23_8c_ab5dd89928bb6a9153783e528da4d7e73}{test\+\_\+function\+\_\+string\+\_\+return}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a36e59b0be0bbad85d4b4b42f2188be83}{test\+\_\+function\+\_\+tracing}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a070645fd58a3b0365fbf8025670b6ffd}{test\+\_\+generic\+\_\+formatting}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_abe9dd1824989d6d407f1d61f9b95146b}{test\+\_\+pointer\+\_\+inspection}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a421d01ced77bf939f3b05b56b63f73e8}{test\+\_\+memory\+\_\+allocation}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_aee014ef70f7d824ea263859fc89adbc7}{test\+\_\+assertions\+\_\+pass}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a630493237da7c4b14a0ff35df769c1b0}{test\+\_\+soft\+\_\+checks}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a1ec8bd65f26977c6967fb15496f0d9b7}{test\+\_\+backtrace\+\_\+inner}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a1204b683620a0be822cf730bd0ba62bc}{test\+\_\+backtrace\+\_\+middle}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a50262936d72a69c82c47f6db7d6f6012}{test\+\_\+backtrace}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a6638f20a4f40a1d47bd800861efe5ca9}{test\+\_\+loop\+\_\+tracing}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a729bda48162c78822de3814a8f84116e}{test\+\_\+conditional\+\_\+compilation}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a236013fe89e8103349a3272b381fedaa}{test\+\_\+scope\+\_\+helpers}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a9f94bc8cc6dd6b8b67078d3bb93cc228}{test\+\_\+format\+\_\+edge\+\_\+cases}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a841bd8b53d75a1d7b720daaa33deaf23}{test\+\_\+compile\+\_\+definitions}} (void)
+\item 
+\mbox{\hyperlink{structTestStruct}{Test\+Struct}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{test__debug__c23_8c_af3151e06f0c701ba63c3205ab565fcb4}{create\+\_\+test\+\_\+struct}} (int id, const char \texorpdfstring{$\ast$}{*}name, double value)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a90cc493d0a2d314a6dab34b1291719b0}{process\+\_\+array}} (int \texorpdfstring{$\ast$}{*}arr, int size)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_aae7227ee947675edb35201c4b6fe5861}{test\+\_\+integration}} (void)
+\item 
+void \mbox{\hyperlink{test__debug__c23_8c_a762d2c3daf66232299289484c0d942b5}{test\+\_\+abort\+\_\+compilation}} (void)
+\item 
+int \mbox{\hyperlink{test__debug__c23_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{test__debug__c23_8c_abf0c823d1963d8f0376e85f1b4973fb5}{tests\+\_\+passed}} = 0
+\item 
+static int \mbox{\hyperlink{test__debug__c23_8c_ac416cbab22199a47838dc6de83be2b25}{tests\+\_\+failed}} = 0
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{test__debug__c23_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{test__debug__c23_8c_ac2d33ccaf63f5d5b66552b95426c0137}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!DEBUG\_LEVEL@{DEBUG\_LEVEL}}
+\index{DEBUG\_LEVEL@{DEBUG\_LEVEL}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LEVEL}{DEBUG\_LEVEL}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_ac2d33ccaf63f5d5b66552b95426c0137} 
+\#define DEBUG\+\_\+\+LEVEL~5}
+
+\Hypertarget{test__debug__c23_8c_a5a78d3750a4a21666211d4b30a5c45e8}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!TEST\_FAIL@{TEST\_FAIL}}
+\index{TEST\_FAIL@{TEST\_FAIL}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_FAIL}{TEST\_FAIL}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a5a78d3750a4a21666211d4b30a5c45e8} 
+\#define TEST\+\_\+\+FAIL(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{reason}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fprintf(stdout,\ \textcolor{stringliteral}{"{}[FAIL]\ \%s\ -\/\ \%s\(\backslash\)n"{}},\ name,\ reason);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test__debug__c23_8c_ac416cbab22199a47838dc6de83be2b25}{tests\_failed}}++;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fflush(stdout);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{test__debug__c23_8c_aa3ff270639ce6af6d1614f15ee082a79}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!TEST\_PASS@{TEST\_PASS}}
+\index{TEST\_PASS@{TEST\_PASS}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_PASS}{TEST\_PASS}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_aa3ff270639ce6af6d1614f15ee082a79} 
+\#define TEST\+\_\+\+PASS(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fprintf(stdout,\ \textcolor{stringliteral}{"{}[PASS]\ \%s\(\backslash\)n"{}},\ name);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test__debug__c23_8c_abf0c823d1963d8f0376e85f1b4973fb5}{tests\_passed}}++;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fflush(stdout);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{test__debug__c23_8c_af19cf2a82cf274bf7c72dfa8286bc36e}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!TEST\_START@{TEST\_START}}
+\index{TEST\_START@{TEST\_START}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_START}{TEST\_START}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_af19cf2a82cf274bf7c72dfa8286bc36e} 
+\#define TEST\+\_\+\+START(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fprintf(stdout,\ \textcolor{stringliteral}{"{}\(\backslash\)n===\ TEST:\ \%s\ ===\(\backslash\)n"{}},\ name);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fflush(stdout);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{test__debug__c23_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test__debug__c23_8c_af3151e06f0c701ba63c3205ab565fcb4}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!create\_test\_struct@{create\_test\_struct}}
+\index{create\_test\_struct@{create\_test\_struct}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{create\_test\_struct()}{create\_test\_struct()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_af3151e06f0c701ba63c3205ab565fcb4} 
+\mbox{\hyperlink{structTestStruct}{Test\+Struct}} \texorpdfstring{$\ast$}{*} create\+\_\+test\+\_\+struct (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{double}]{value}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_af3151e06f0c701ba63c3205ab565fcb4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a840291bc02cba5474a4cb46a9b9566fe}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!main@{main}}
+\index{main@{main}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a840291bc02cba5474a4cb46a9b9566fe} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a90cc493d0a2d314a6dab34b1291719b0}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!process\_array@{process\_array}}
+\index{process\_array@{process\_array}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{process\_array()}{process\_array()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a90cc493d0a2d314a6dab34b1291719b0} 
+void process\+\_\+array (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{arr}{, }\item[{int}]{size}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a90cc493d0a2d314a6dab34b1291719b0_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a762d2c3daf66232299289484c0d942b5}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_abort\_compilation@{test\_abort\_compilation}}
+\index{test\_abort\_compilation@{test\_abort\_compilation}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_abort\_compilation()}{test\_abort\_compilation()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a762d2c3daf66232299289484c0d942b5} 
+void test\+\_\+abort\+\_\+compilation (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{test__debug__c23_8c_a762d2c3daf66232299289484c0d942b5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_aee014ef70f7d824ea263859fc89adbc7}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_assertions\_pass@{test\_assertions\_pass}}
+\index{test\_assertions\_pass@{test\_assertions\_pass}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_assertions\_pass()}{test\_assertions\_pass()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_aee014ef70f7d824ea263859fc89adbc7} 
+void test\+\_\+assertions\+\_\+pass (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=275pt]{test__debug__c23_8c_aee014ef70f7d824ea263859fc89adbc7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a50262936d72a69c82c47f6db7d6f6012}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_backtrace@{test\_backtrace}}
+\index{test\_backtrace@{test\_backtrace}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_backtrace()}{test\_backtrace()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a50262936d72a69c82c47f6db7d6f6012} 
+void test\+\_\+backtrace (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a50262936d72a69c82c47f6db7d6f6012_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=245pt]{test__debug__c23_8c_a50262936d72a69c82c47f6db7d6f6012_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a1ec8bd65f26977c6967fb15496f0d9b7}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_backtrace\_inner@{test\_backtrace\_inner}}
+\index{test\_backtrace\_inner@{test\_backtrace\_inner}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_backtrace\_inner()}{test\_backtrace\_inner()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a1ec8bd65f26977c6967fb15496f0d9b7} 
+void test\+\_\+backtrace\+\_\+inner (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a1ec8bd65f26977c6967fb15496f0d9b7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a1204b683620a0be822cf730bd0ba62bc}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_backtrace\_middle@{test\_backtrace\_middle}}
+\index{test\_backtrace\_middle@{test\_backtrace\_middle}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_backtrace\_middle()}{test\_backtrace\_middle()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a1204b683620a0be822cf730bd0ba62bc} 
+void test\+\_\+backtrace\+\_\+middle (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a1204b683620a0be822cf730bd0ba62bc_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a1204b683620a0be822cf730bd0ba62bc_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a841bd8b53d75a1d7b720daaa33deaf23}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_compile\_definitions@{test\_compile\_definitions}}
+\index{test\_compile\_definitions@{test\_compile\_definitions}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_compile\_definitions()}{test\_compile\_definitions()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a841bd8b53d75a1d7b720daaa33deaf23} 
+void test\+\_\+compile\+\_\+definitions (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{test__debug__c23_8c_a841bd8b53d75a1d7b720daaa33deaf23_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a729bda48162c78822de3814a8f84116e}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_conditional\_compilation@{test\_conditional\_compilation}}
+\index{test\_conditional\_compilation@{test\_conditional\_compilation}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_conditional\_compilation()}{test\_conditional\_compilation()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a729bda48162c78822de3814a8f84116e} 
+void test\+\_\+conditional\+\_\+compilation (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{test__debug__c23_8c_a729bda48162c78822de3814a8f84116e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a9f94bc8cc6dd6b8b67078d3bb93cc228}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_format\_edge\_cases@{test\_format\_edge\_cases}}
+\index{test\_format\_edge\_cases@{test\_format\_edge\_cases}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_format\_edge\_cases()}{test\_format\_edge\_cases()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a9f94bc8cc6dd6b8b67078d3bb93cc228} 
+void test\+\_\+format\+\_\+edge\+\_\+cases (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{test__debug__c23_8c_a9f94bc8cc6dd6b8b67078d3bb93cc228_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a71f8d45958443cd5674440c49ef24ddb}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_function\_double\_return@{test\_function\_double\_return}}
+\index{test\_function\_double\_return@{test\_function\_double\_return}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_function\_double\_return()}{test\_function\_double\_return()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a71f8d45958443cd5674440c49ef24ddb} 
+double test\+\_\+function\+\_\+double\+\_\+return (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a71f8d45958443cd5674440c49ef24ddb_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_ab5dd89928bb6a9153783e528da4d7e73}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_function\_string\_return@{test\_function\_string\_return}}
+\index{test\_function\_string\_return@{test\_function\_string\_return}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_function\_string\_return()}{test\_function\_string\_return()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_ab5dd89928bb6a9153783e528da4d7e73} 
+char \texorpdfstring{$\ast$}{*} test\+\_\+function\+\_\+string\+\_\+return (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_ab5dd89928bb6a9153783e528da4d7e73_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a36e59b0be0bbad85d4b4b42f2188be83}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_function\_tracing@{test\_function\_tracing}}
+\index{test\_function\_tracing@{test\_function\_tracing}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_function\_tracing()}{test\_function\_tracing()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a36e59b0be0bbad85d4b4b42f2188be83} 
+void test\+\_\+function\+\_\+tracing (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_a36e59b0be0bbad85d4b4b42f2188be83_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{test__debug__c23_8c_a36e59b0be0bbad85d4b4b42f2188be83_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_ac99394a87dbc4834c706e76a021bf241}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_function\_with\_tracing@{test\_function\_with\_tracing}}
+\index{test\_function\_with\_tracing@{test\_function\_with\_tracing}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_function\_with\_tracing()}{test\_function\_with\_tracing()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_ac99394a87dbc4834c706e76a021bf241} 
+int test\+\_\+function\+\_\+with\+\_\+tracing (\begin{DoxyParamCaption}\item[{int}]{n}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__c23_8c_ac99394a87dbc4834c706e76a021bf241_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a070645fd58a3b0365fbf8025670b6ffd}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_generic\_formatting@{test\_generic\_formatting}}
+\index{test\_generic\_formatting@{test\_generic\_formatting}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_generic\_formatting()}{test\_generic\_formatting()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a070645fd58a3b0365fbf8025670b6ffd} 
+void test\+\_\+generic\+\_\+formatting (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{test__debug__c23_8c_a070645fd58a3b0365fbf8025670b6ffd_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_aae7227ee947675edb35201c4b6fe5861}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_integration@{test\_integration}}
+\index{test\_integration@{test\_integration}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_integration()}{test\_integration()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_aae7227ee947675edb35201c4b6fe5861} 
+void test\+\_\+integration (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{test__debug__c23_8c_aae7227ee947675edb35201c4b6fe5861_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{test__debug__c23_8c_aae7227ee947675edb35201c4b6fe5861_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a399d22ae62256fd4eae26659481daa0e}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_log\_levels@{test\_log\_levels}}
+\index{test\_log\_levels@{test\_log\_levels}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_log\_levels()}{test\_log\_levels()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a399d22ae62256fd4eae26659481daa0e} 
+void test\+\_\+log\+\_\+levels (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{test__debug__c23_8c_a399d22ae62256fd4eae26659481daa0e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a6638f20a4f40a1d47bd800861efe5ca9}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_loop\_tracing@{test\_loop\_tracing}}
+\index{test\_loop\_tracing@{test\_loop\_tracing}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_loop\_tracing()}{test\_loop\_tracing()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a6638f20a4f40a1d47bd800861efe5ca9} 
+void test\+\_\+loop\+\_\+tracing (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=257pt]{test__debug__c23_8c_a6638f20a4f40a1d47bd800861efe5ca9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a421d01ced77bf939f3b05b56b63f73e8}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_memory\_allocation@{test\_memory\_allocation}}
+\index{test\_memory\_allocation@{test\_memory\_allocation}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_memory\_allocation()}{test\_memory\_allocation()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a421d01ced77bf939f3b05b56b63f73e8} 
+void test\+\_\+memory\+\_\+allocation (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=291pt]{test__debug__c23_8c_a421d01ced77bf939f3b05b56b63f73e8_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_abe9dd1824989d6d407f1d61f9b95146b}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_pointer\_inspection@{test\_pointer\_inspection}}
+\index{test\_pointer\_inspection@{test\_pointer\_inspection}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_pointer\_inspection()}{test\_pointer\_inspection()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_abe9dd1824989d6d407f1d61f9b95146b} 
+void test\+\_\+pointer\+\_\+inspection (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{test__debug__c23_8c_abe9dd1824989d6d407f1d61f9b95146b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a236013fe89e8103349a3272b381fedaa}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_scope\_helpers@{test\_scope\_helpers}}
+\index{test\_scope\_helpers@{test\_scope\_helpers}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_scope\_helpers()}{test\_scope\_helpers()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a236013fe89e8103349a3272b381fedaa} 
+void test\+\_\+scope\+\_\+helpers (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=267pt]{test__debug__c23_8c_a236013fe89e8103349a3272b381fedaa_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__c23_8c_a630493237da7c4b14a0ff35df769c1b0}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!test\_soft\_checks@{test\_soft\_checks}}
+\index{test\_soft\_checks@{test\_soft\_checks}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{test\_soft\_checks()}{test\_soft\_checks()}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_a630493237da7c4b14a0ff35df769c1b0} 
+void test\+\_\+soft\+\_\+checks (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{test__debug__c23_8c_a630493237da7c4b14a0ff35df769c1b0_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{test__debug__c23_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{test__debug__c23_8c_ac416cbab22199a47838dc6de83be2b25}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!tests\_failed@{tests\_failed}}
+\index{tests\_failed@{tests\_failed}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{tests\_failed}{tests\_failed}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_ac416cbab22199a47838dc6de83be2b25} 
+int tests\+\_\+failed = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{test__debug__c23_8c_abf0c823d1963d8f0376e85f1b4973fb5}\index{test\_debug\_c23.c@{test\_debug\_c23.c}!tests\_passed@{tests\_passed}}
+\index{tests\_passed@{tests\_passed}!test\_debug\_c23.c@{test\_debug\_c23.c}}
+\doxysubsubsection{\texorpdfstring{tests\_passed}{tests\_passed}}
+{\footnotesize\ttfamily \label{test__debug__c23_8c_abf0c823d1963d8f0376e85f1b4973fb5} 
+int tests\+\_\+passed = 0\hspace{0.3cm}{\ttfamily [static]}}
+

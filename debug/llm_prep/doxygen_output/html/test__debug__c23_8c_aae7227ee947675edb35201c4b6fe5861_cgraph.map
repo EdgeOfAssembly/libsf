@@ -1,0 +1,7 @@
+<map id="test_integration" name="test_integration">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,130,60"/>
+<area shape="rect" id="Node000002" href="$test__debug__c23_8c.html#af3151e06f0c701ba63c3205ab565fcb4" title=" " alt="" coords="178,5,316,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,34,165,31,159,33,131,39"/>
+<area shape="rect" id="Node000003" href="$test__debug__c23_8c.html#a90cc493d0a2d314a6dab34b1291719b0" title=" " alt="" coords="191,57,303,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,52,178,61,172,61,130,57"/>
+</map>

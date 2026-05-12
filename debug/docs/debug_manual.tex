@@ -1,0 +1,626 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+
+% Page geometry
+\geometry{margin=1in}
+
+% Colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{errorred}{rgb}{0.8,0,0}
+\definecolor{warnyellow}{rgb}{0.7,0.5,0}
+\definecolor{infogreen}{rgb}{0,0.5,0}
+\definecolor{debugcyan}{rgb}{0,0.5,0.7}
+\definecolor{tracemagenta}{rgb}{0.5,0,0.5}
+
+% Code listing style
+\lstdefinestyle{cstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codepurple},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=C,
+    morekeywords={size_t, uint8_t, int32_t, uint32_t, FILE, User, DEBUG_LEVEL,
+                  DEBUG_TIMESTAMPS, DEBUG_COLORS, DEBUG_THREAD_SAFE, NDEBUG}
+}
+
+\lstset{style=cstyle}
+
+% Header/footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\texttt{debug.h} API Reference}
+\fancyhead[R]{Version 2.0}
+\fancyfoot[C]{\thepage}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% Title
+\title{%
+    \texttt{debug.h} \\
+    \large A Battle-Hardened Debugging Header for C23/C++23 \\
+    \vspace{0.5cm}
+    \large API Reference \& User Guide
+}
+\author{GitHub Copilot \\ EdgeOfAssembly/RetroCodeMess}
+\date{December 2025 \\ Version 2.0}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ============================================================================
+\section{Introduction}
+% ============================================================================
+
+\texttt{debug.h} is a feature-complete, header-only debugging library for C23 and C++23 that provides powerful debugging capabilities with zero runtime cost in release builds.
+
+\subsection{Key Features}
+
+\begin{itemize}
+    \item \textbf{Five Log Levels}: TRACE, DEBUG, INFO, WARN, ERROR
+    \item \textbf{Function Tracing}: Entry/exit logging with return values
+    \item \textbf{Type-Safe Inspection}: Uses C11 \texttt{\_Generic} for automatic formatting
+    \item \textbf{Cross-Platform}: Works on Linux, macOS, and Windows
+    \item \textbf{Thread-Safe}: Optional mutex locking
+    \item \textbf{Timestamps}: Optional date/time prefixes
+    \item \textbf{ANSI Colors}: Configurable color output
+    \item \textbf{Output Redirection}: File output and custom handlers
+    \item \textbf{Zero Overhead}: Compiles out completely with \texttt{-DNDEBUG}
+\end{itemize}
+
+\subsection{Quick Start}
+
+\begin{lstlisting}
+#define DEBUG_LEVEL 5       // Full verbosity
+#define DEBUG_TIMESTAMPS    // Add timestamps
+#define DEBUG_COLORS        // Color output
+#include "debug.h"
+
+int main(void) {
+    DEBUG_INFO("Hello, debugging world!");
+    
+    int x = 42;
+    DEBUG_VAR(x);  // Output: VAR x = 42
+    
+    return 0;
+}
+\end{lstlisting}
+
+% ============================================================================
+\section{Configuration}
+% ============================================================================
+
+\subsection{Configuration Macros}
+
+Define these \textbf{before} including \texttt{debug.h}:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Macro} & \textbf{Default} & \textbf{Description} \\
+\midrule
+\texttt{DEBUG\_LEVEL} & 5 & Verbosity level (0--5) \\
+\texttt{DEBUG\_TIMESTAMPS} & undefined & Enable timestamp prefixes \\
+\texttt{DEBUG\_COLORS} & undefined & Enable ANSI color output \\
+\texttt{DEBUG\_THREAD\_SAFE} & undefined & Enable mutex locking \\
+\texttt{NDEBUG} & undefined & Disable all debug code \\
+\bottomrule
+\end{tabular}
+\caption{Configuration macros}
+\end{table}
+
+\subsection{Log Levels}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Level} & \textbf{Constant} & \textbf{Description} & \textbf{Color} \\
+\midrule
+1 & \texttt{LOG\_ERROR} & Errors only & \textcolor{errorred}{Red (bold)} \\
+2 & \texttt{LOG\_WARN} & Warnings and above & \textcolor{warnyellow}{Yellow} \\
+3 & \texttt{LOG\_INFO} & Info and above & \textcolor{infogreen}{Green} \\
+4 & \texttt{LOG\_DEBUG} & Debug and above & \textcolor{debugcyan}{Cyan} \\
+5 & \texttt{LOG\_TRACE} & Everything (verbose) & \textcolor{tracemagenta}{Magenta} \\
+\bottomrule
+\end{tabular}
+\caption{Log levels and colors}
+\end{table}
+
+% ============================================================================
+\section{Logging Macros}
+% ============================================================================
+
+\subsection{Basic Logging}
+
+\begin{tcolorbox}[title=Logging Macros]
+\begin{lstlisting}[numbers=none]
+DEBUG_TRACE(fmt, ...);  // Most verbose
+DEBUG_DEBUG(fmt, ...);
+DEBUG_INFO(fmt, ...);
+DEBUG_WARN(fmt, ...);
+DEBUG_ERROR(fmt, ...);  // Least verbose
+DEBUG_LOG(level, fmt, ...);  // Explicit level
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Example:}
+\begin{lstlisting}
+DEBUG_INFO("Processing item %d of %d", current, total);
+DEBUG_WARN("Cache miss for key: %s", key);
+DEBUG_ERROR("Failed to open file: %s (errno=%d)", filename, errno);
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+[INFO ] main.c:10 process_items: Processing item 5 of 100
+[WARN ] cache.c:42 lookup: Cache miss for key: user_123
+[ERROR] file.c:15 open_file: Failed to open file: data.txt (errno=2)
+\end{verbatim}
+
+% ============================================================================
+\section{Function Tracing}
+% ============================================================================
+
+\subsection{Entry and Exit}
+
+\begin{tcolorbox}[title=Function Tracing Macros]
+\begin{lstlisting}[numbers=none]
+DEBUG_ENTER(fmt, ...);  // Log function entry
+DEBUG_EXIT(ret);        // Log exit and return value
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Example:}
+\begin{lstlisting}
+int factorial(int n) {
+    DEBUG_ENTER("(n=%d)", n);
+    DEBUG_ASSERT(n >= 0, "Negative input!");
+    
+    if (n <= 1) {
+        DEBUG_EXIT(1);
+    }
+    
+    int result = n * factorial(n - 1);
+    DEBUG_VAR(result);
+    DEBUG_EXIT(result);
+}
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+[TRACE] math.c:2 factorial: ENTER (n=5)
+[TRACE] math.c:2 factorial: ENTER (n=4)
+[TRACE] math.c:2 factorial: ENTER (n=3)
+[TRACE] math.c:2 factorial: ENTER (n=2)
+[TRACE] math.c:2 factorial: ENTER (n=1)
+[TRACE] math.c:6 factorial: EXIT (return: 1)
+[TRACE] math.c:10 factorial: VAR result = 2
+[TRACE] math.c:11 factorial: EXIT (return: 2)
+...
+\end{verbatim}
+
+% ============================================================================
+\section{Variable Inspection}
+% ============================================================================
+
+\subsection{DEBUG\_VAR}
+
+The \texttt{DEBUG\_VAR} macro uses C11 \texttt{\_Generic} to automatically format variables based on their type.
+
+\begin{tcolorbox}[title=Supported Types]
+\begin{itemize}[noitemsep]
+    \item \texttt{int}, \texttt{unsigned int}
+    \item \texttt{long}, \texttt{unsigned long}
+    \item \texttt{double}
+    \item \texttt{char*}
+    \item \texttt{void*}
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Example:}
+\begin{lstlisting}
+int count = 42;
+double pi = 3.14159;
+char *name = "Alice";
+void *ptr = malloc(100);
+
+DEBUG_VAR(count);  // VAR count = 42
+DEBUG_VAR(pi);     // VAR pi = 3.141590
+DEBUG_VAR(name);   // VAR name = Alice
+DEBUG_VAR(ptr);    // VAR ptr = 0x7f...
+\end{lstlisting}
+
+\subsection{DEBUG\_PTR}
+
+For pointers with size descriptions:
+
+\begin{lstlisting}
+char *buffer = malloc(1024);
+DEBUG_PTR(buffer, "1024 bytes");
+// Output: PTR buffer @ 0x7f... (size: 1024 bytes)
+\end{lstlisting}
+
+% ============================================================================
+\section{Memory Allocation}
+% ============================================================================
+
+\begin{tcolorbox}[title=Memory Macros]
+\begin{lstlisting}[numbers=none]
+void* ptr = DEBUG_MALLOC(size);
+DEBUG_FREE(ptr);
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Example:}
+\begin{lstlisting}
+typedef struct {
+    int id;
+    char name[32];
+} User;
+
+User *user = (User*)DEBUG_MALLOC(sizeof(User));
+// Output: MALLOC 0x55... (size: 40 bytes)
+
+// ... use user ...
+
+DEBUG_FREE(user);
+// Output: FREE 0x55...
+\end{lstlisting}
+
+% ============================================================================
+\section{Assertions}
+% ============================================================================
+
+\subsection{DEBUG\_ASSERT}
+
+Hard assertion that aborts on failure with backtrace:
+
+\begin{lstlisting}
+void *ptr = malloc(1024);
+DEBUG_ASSERT(ptr != NULL, "Allocation failed for %zu bytes", 1024);
+\end{lstlisting}
+
+\subsection{DEBUG\_CHECK}
+
+Soft check that logs warning but continues:
+
+\begin{lstlisting}
+DEBUG_CHECK(value >= 0, "Warning: negative value %d", value);
+// Program continues even if check fails
+\end{lstlisting}
+
+% ============================================================================
+\section{Backtrace}
+% ============================================================================
+
+\begin{lstlisting}
+DEBUG_BACKTRACE();
+\end{lstlisting}
+
+\textbf{Output (Linux):}
+\begin{verbatim}
+[ERROR] main.c:42 risky_function: BACKTRACE (5 frames):
+[ERROR]   #0: ./prog(risky_function+0x37) [0x55...]
+[ERROR]   #1: ./prog(main+0x15c) [0x55...]
+[ERROR]   #2: /lib/x86_64-linux-gnu/libc.so.6(+0x2a1ca) [0x7f...]
+[ERROR]   #3: /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x8b)
+[ERROR]   #4: ./prog(_start+0x25) [0x55...]
+\end{verbatim}
+
+\textbf{Note:} Compile with \texttt{-rdynamic} for function names.
+
+% ============================================================================
+\section{Loop Tracing}
+% ============================================================================
+
+\begin{lstlisting}
+DEBUG_LOOP_START("Processing %d items", count);
+for (int i = 0; i < count; i++) {
+    DEBUG_LOOP_ITER(i, count);
+    process(items[i]);
+}
+DEBUG_LOOP_END("Completed");
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+[TRACE] process.c:10 process_items: LOOP START Processing 100 items
+[DEBUG] process.c:12 process_items: LOOP ITER 0/100
+[DEBUG] process.c:12 process_items: LOOP ITER 1/100
+...
+[TRACE] process.c:15 process_items: LOOP END Completed
+\end{verbatim}
+
+% ============================================================================
+\section{Output Redirection}
+% ============================================================================
+
+\subsection{File Output}
+
+\begin{lstlisting}
+FILE *logfile = fopen("debug.log", "w");
+DEBUG_SET_OUTPUT(logfile);
+
+DEBUG_INFO("This goes to the file");
+// ... more logging ...
+
+DEBUG_RESET_OUTPUT();  // Back to stderr
+fclose(logfile);
+\end{lstlisting}
+
+\subsection{Custom Handler}
+
+\begin{lstlisting}
+void my_handler(const char* level, const char* file,
+                int line, const char* func, const char* msg) {
+    // Custom logging logic (e.g., send to network, database)
+    syslog(LOG_INFO, "[%s] %s:%d %s: %s", level, file, line, func, msg);
+}
+
+DEBUG_SET_HANDLER(my_handler);
+\end{lstlisting}
+
+% ============================================================================
+\section{Thread Safety}
+% ============================================================================
+
+Enable thread-safe logging:
+
+\begin{lstlisting}
+#define DEBUG_THREAD_SAFE
+#include "debug.h"
+\end{lstlisting}
+
+Compile with: \texttt{-pthread}
+
+\textbf{Note:} Uses \texttt{pthread\_mutex\_t} in C, \texttt{std::mutex} in C++.
+
+% ============================================================================
+\section{GDB Integration}
+% ============================================================================
+
+\subsection{DEBUG\_BREAK}
+
+Insert a breakpoint:
+
+\begin{lstlisting}
+if (suspicious_condition) {
+    DEBUG_BREAK();  // Triggers SIGTRAP
+}
+\end{lstlisting}
+
+\subsection{Debugging Tips}
+
+\begin{enumerate}
+    \item Compile with \texttt{-g} for symbols
+    \item Use \texttt{-rdynamic} for backtrace function names
+    \item In GDB: \texttt{catch signal SIGTRAP} to catch \texttt{DEBUG\_BREAK}
+    \item Use \texttt{bt} in GDB to see call stack
+\end{enumerate}
+
+% ============================================================================
+\section{Compilation}
+% ============================================================================
+
+\subsection{Debug Build}
+
+\begin{verbatim}
+gcc -std=c23 -g -O0 -Wall -Wextra -rdynamic -o prog prog.c
+\end{verbatim}
+
+\subsection{Release Build}
+
+\begin{verbatim}
+gcc -std=c23 -O2 -DNDEBUG -o prog prog.c
+\end{verbatim}
+
+\subsection{Thread-Safe Build}
+
+\begin{verbatim}
+gcc -std=c23 -g -O0 -Wall -Wextra -rdynamic -pthread -o prog prog.c
+\end{verbatim}
+
+% ============================================================================
+\section{Platform Support}
+% ============================================================================
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Platform} & \textbf{Backtrace} & \textbf{Break} & \textbf{Notes} \\
+\midrule
+Linux & Yes (execinfo.h) & Yes (\_\_builtin\_trap) & Use \texttt{-rdynamic} \\
+macOS & Yes (execinfo.h) & Yes (\_\_builtin\_trap) & Full support \\
+Windows (MSVC) & Yes (dbghelp) & Yes (\_\_debugbreak) & Link dbghelp.lib \\
+Windows (MinGW) & Fallback & Yes (\_\_builtin\_trap) & Limited backtrace \\
+\bottomrule
+\end{tabular}
+\caption{Platform support matrix}
+\end{table}
+
+% ============================================================================
+\section{Complete Example}
+% ============================================================================
+
+\begin{lstlisting}
+/*
+ * example.c - Complete debug.h usage example
+ */
+
+#define DEBUG_LEVEL 5
+#define DEBUG_TIMESTAMPS
+#define DEBUG_COLORS
+#include "debug.h"
+#include <string.h>
+
+typedef struct {
+    int id;
+    char name[32];
+    double score;
+} Student;
+
+Student* create_student(int id, const char* name, double score) {
+    DEBUG_ENTER("(id=%d, name=%s, score=%.2f)", id, name, score);
+    
+    Student* s = (Student*)DEBUG_MALLOC(sizeof(Student));
+    DEBUG_ASSERT(s != NULL, "Failed to allocate Student");
+    
+    s->id = id;
+    strncpy(s->name, name, sizeof(s->name) - 1);
+    s->name[sizeof(s->name) - 1] = '\0';
+    s->score = score;
+    
+    DEBUG_PTR(s, "Student struct");
+    DEBUG_VAR(s->id);
+    DEBUG_VAR(s->score);
+    
+    DEBUG_EXIT(s);
+}
+
+void process_students(Student** students, int count) {
+    DEBUG_ENTER("(count=%d)", count);
+    DEBUG_CHECK(count > 0, "No students to process");
+    
+    double total = 0.0;
+    
+    DEBUG_LOOP_START("Calculating average");
+    for (int i = 0; i < count; i++) {
+        DEBUG_LOOP_ITER(i, count);
+        total += students[i]->score;
+    }
+    DEBUG_LOOP_END();
+    
+    double average = total / count;
+    DEBUG_VAR(average);
+    DEBUG_INFO("Average score: %.2f", average);
+}
+
+int main(void) {
+    Student* s1 = create_student(1, "Alice", 95.5);
+    Student* s2 = create_student(2, "Bob", 87.3);
+    
+    Student* students[] = {s1, s2};
+    process_students(students, 2);
+    
+    DEBUG_FREE(s1);
+    DEBUG_FREE(s2);
+    
+    return 0;
+}
+\end{lstlisting}
+
+% ============================================================================
+\section{API Reference Summary}
+% ============================================================================
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Macro} & \textbf{Description} \\
+\midrule
+\multicolumn{2}{l}{\textit{Logging}} \\
+\texttt{DEBUG\_TRACE/DEBUG/INFO/WARN/ERROR} & Log at specified level \\
+\texttt{DEBUG\_LOG(level, fmt, ...)} & Log at explicit level \\
+\midrule
+\multicolumn{2}{l}{\textit{Function Tracing}} \\
+\texttt{DEBUG\_ENTER(fmt, ...)} & Log function entry \\
+\texttt{DEBUG\_EXIT(ret)} & Log exit with return \\
+\midrule
+\multicolumn{2}{l}{\textit{Inspection}} \\
+\texttt{DEBUG\_VAR(var)} & Print variable value \\
+\texttt{DEBUG\_PTR(ptr, desc)} & Print pointer info \\
+\midrule
+\multicolumn{2}{l}{\textit{Memory}} \\
+\texttt{DEBUG\_MALLOC(size)} & Logged malloc \\
+\texttt{DEBUG\_FREE(ptr)} & Logged free \\
+\midrule
+\multicolumn{2}{l}{\textit{Assertions}} \\
+\texttt{DEBUG\_ASSERT(expr, ...)} & Hard assert (aborts) \\
+\texttt{DEBUG\_CHECK(expr, ...)} & Soft check (continues) \\
+\texttt{DEBUG\_BACKTRACE()} & Print stack trace \\
+\midrule
+\multicolumn{2}{l}{\textit{Loops}} \\
+\texttt{DEBUG\_LOOP\_START/ITER/END} & Loop tracing \\
+\midrule
+\multicolumn{2}{l}{\textit{Output}} \\
+\texttt{DEBUG\_SET\_OUTPUT(file)} & Redirect to file \\
+\texttt{DEBUG\_RESET\_OUTPUT()} & Reset to stderr \\
+\texttt{DEBUG\_SET\_HANDLER(fn)} & Custom handler \\
+\midrule
+\multicolumn{2}{l}{\textit{GDB}} \\
+\texttt{DEBUG\_BREAK()} & Insert breakpoint \\
+\texttt{DEBUG\_IF(expr)} & Conditional block \\
+\texttt{DEBUG\_ABORT(msg, ...)} & Abort with message \\
+\bottomrule
+\end{tabular}
+\caption{Complete API reference}
+\end{table}
+
+% ============================================================================
+\section{License}
+% ============================================================================
+
+MIT License
+
+Copyright (c) 2025 EdgeOfAssembly
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the ``Software''), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+\end{document}

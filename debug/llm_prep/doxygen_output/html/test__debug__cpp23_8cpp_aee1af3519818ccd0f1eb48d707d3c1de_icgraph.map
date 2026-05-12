@@ -1,0 +1,9 @@
+<map id="test_backtrace_inner_cpp" name="test_backtrace_inner_cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="550,5,738,33"/>
+<area shape="rect" id="Node000002" href="$test__debug__cpp23_8cpp.html#a853b304e67e6c661d4b0bc99047c0064" title=" " alt="" coords="303,5,502,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="532,19,503,22,503,17,537,19"/>
+<area shape="rect" id="Node000003" href="$test__debug__cpp23_8cpp.html#a97c8f500cde880afe746443238a74dcc" title=" " alt="" coords="108,5,255,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="285,19,255,22,255,17,290,19"/>
+<area shape="rect" id="Node000004" href="$test__debug__cpp23_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,60,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="90,20,60,22,60,17,95,18"/>
+</map>

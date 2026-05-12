@@ -1,0 +1,7 @@
+<map id="test_integration_cpp" name="test_integration_cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,160,60"/>
+<area shape="rect" id="Node000002" href="$classDataProcessor.html#a8226b8294438db06d47fdc6bbf0425dc" title=" " alt="" coords="208,5,393,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,34,195,32,190,33,161,39"/>
+<area shape="rect" id="Node000003" href="$classDataProcessor.html#a5043be47141ba8aae70addf7bf1a67b7" title=" " alt="" coords="214,57,387,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="160,52,201,59,196,60,160,58"/>
+</map>

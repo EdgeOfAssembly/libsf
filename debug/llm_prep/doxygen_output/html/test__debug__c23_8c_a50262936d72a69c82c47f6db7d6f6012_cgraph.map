@@ -1,0 +1,7 @@
+<map id="test_backtrace" name="test_backtrace">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,123,33"/>
+<area shape="rect" id="Node000002" href="$test__debug__c23_8c.html#a1204b683620a0be822cf730bd0ba62bc" title=" " alt="" coords="171,5,340,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,17,158,19,153,19,123,22"/>
+<area shape="rect" id="Node000003" href="$test__debug__c23_8c.html#a1ec8bd65f26977c6967fb15496f0d9b7" title=" " alt="" coords="388,5,545,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="340,17,375,19,369,19,340,22"/>
+</map>

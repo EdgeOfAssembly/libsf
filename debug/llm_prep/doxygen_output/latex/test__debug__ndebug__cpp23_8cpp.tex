@@ -1,0 +1,319 @@
+\doxysection{tests/test\+\_\+debug\+\_\+ndebug\+\_\+cpp23.cpp File Reference}
+\hypertarget{test__debug__ndebug__cpp23_8cpp}{}\label{test__debug__ndebug__cpp23_8cpp}\index{tests/test\_debug\_ndebug\_cpp23.cpp@{tests/test\_debug\_ndebug\_cpp23.cpp}}
+{\ttfamily \#include "{}../debug.\+h"{}}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+Include dependency graph for test\+\_\+debug\+\_\+ndebug\+\_\+cpp23.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__ndebug__cpp23_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classInstrumentedClassNDEBUG}{Instrumented\+Class\+NDEBUG}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_a8de3ed741dadc9c979a4ff17c0a9116e}{NDEBUG}}
+\item 
+\#define \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\+\_\+\+LEVEL}}~5
+\item 
+\#define \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_aa3ff270639ce6af6d1614f15ee082a79}{TEST\+\_\+\+PASS}}(name)
+\item 
+\#define \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_a5a78d3750a4a21666211d4b30a5c45e8}{TEST\+\_\+\+FAIL}}(name,  reason)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_abe35d450753298b8bc0860cf48ef96d1}{test\+\_\+log\+\_\+macros\+\_\+noop\+\_\+cpp}} ()
+\item 
+int \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_a4bcc0216a15bdf4375a9238c508ee86d}{test\+\_\+exit\+\_\+return\+\_\+cpp}} (int n)
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_afe237ae653fee1cd296bb801d4f01ae9}{test\+\_\+function\+\_\+tracing\+\_\+noop\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_a036e6fe506b4e091fdd4afed11f4324e}{test\+\_\+var\+\_\+ptr\+\_\+noop\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_a01c1852611202130ff4da82279419542}{test\+\_\+memory\+\_\+functions\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_a70286f88f0184f920d7925a0294bfff7}{test\+\_\+assert\+\_\+check\+\_\+noop\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ad7fb3a19edb49f92bae516f41796f97d}{test\+\_\+backtrace\+\_\+noop\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ad526b54e826f658ccf773671a5187f34}{test\+\_\+loop\+\_\+macros\+\_\+noop\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ae1bb52038385591c2d583cbc1dc0b85d}{test\+\_\+conditional\+\_\+noop\+\_\+cpp}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_aa8bd18593d35cc10789a7f0ca6899d7c}{test\+\_\+cpp\+\_\+class\+\_\+ndebug}} ()
+\item 
+void \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ae89bb12596822343c293088e48b82f99}{test\+\_\+definitions\+\_\+ndebug\+\_\+cpp}} ()
+\item 
+int \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_abf0c823d1963d8f0376e85f1b4973fb5}{tests\+\_\+passed}} = 0
+\item 
+static int \mbox{\hyperlink{test__debug__ndebug__cpp23_8cpp_ac416cbab22199a47838dc6de83be2b25}{tests\+\_\+failed}} = 0
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ac2d33ccaf63f5d5b66552b95426c0137}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!DEBUG\_LEVEL@{DEBUG\_LEVEL}}
+\index{DEBUG\_LEVEL@{DEBUG\_LEVEL}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LEVEL}{DEBUG\_LEVEL}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ac2d33ccaf63f5d5b66552b95426c0137} 
+\#define DEBUG\+\_\+\+LEVEL~5}
+
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_a8de3ed741dadc9c979a4ff17c0a9116e}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!NDEBUG@{NDEBUG}}
+\index{NDEBUG@{NDEBUG}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{NDEBUG}{NDEBUG}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_a8de3ed741dadc9c979a4ff17c0a9116e} 
+\#define NDEBUG}
+
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_a5a78d3750a4a21666211d4b30a5c45e8}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!TEST\_FAIL@{TEST\_FAIL}}
+\index{TEST\_FAIL@{TEST\_FAIL}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_FAIL}{TEST\_FAIL}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_a5a78d3750a4a21666211d4b30a5c45e8} 
+\#define TEST\+\_\+\+FAIL(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{reason}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[FAIL]\ "{}}\ <<\ name\ <<\ \textcolor{stringliteral}{"{}\ -\/\ "{}}\ <<\ reason\ <<\ std::endl;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test__debug__c23_8c_ac416cbab22199a47838dc6de83be2b25}{tests\_failed}}++;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_aa3ff270639ce6af6d1614f15ee082a79}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!TEST\_PASS@{TEST\_PASS}}
+\index{TEST\_PASS@{TEST\_PASS}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_PASS}{TEST\_PASS}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_aa3ff270639ce6af6d1614f15ee082a79} 
+\#define TEST\+\_\+\+PASS(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[PASS]\ "{}}\ <<\ name\ <<\ std::endl;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test__debug__c23_8c_abf0c823d1963d8f0376e85f1b4973fb5}{tests\_passed}}++;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!main@{main}}
+\index{main@{main}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__ndebug__cpp23_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_a70286f88f0184f920d7925a0294bfff7}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_assert\_check\_noop\_cpp@{test\_assert\_check\_noop\_cpp}}
+\index{test\_assert\_check\_noop\_cpp@{test\_assert\_check\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_assert\_check\_noop\_cpp()}{test\_assert\_check\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_a70286f88f0184f920d7925a0294bfff7} 
+void test\+\_\+assert\+\_\+check\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{test__debug__ndebug__cpp23_8cpp_a70286f88f0184f920d7925a0294bfff7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ad7fb3a19edb49f92bae516f41796f97d}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_backtrace\_noop\_cpp@{test\_backtrace\_noop\_cpp}}
+\index{test\_backtrace\_noop\_cpp@{test\_backtrace\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_backtrace\_noop\_cpp()}{test\_backtrace\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ad7fb3a19edb49f92bae516f41796f97d} 
+void test\+\_\+backtrace\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=297pt]{test__debug__ndebug__cpp23_8cpp_ad7fb3a19edb49f92bae516f41796f97d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ae1bb52038385591c2d583cbc1dc0b85d}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_conditional\_noop\_cpp@{test\_conditional\_noop\_cpp}}
+\index{test\_conditional\_noop\_cpp@{test\_conditional\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_conditional\_noop\_cpp()}{test\_conditional\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ae1bb52038385591c2d583cbc1dc0b85d} 
+void test\+\_\+conditional\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=303pt]{test__debug__ndebug__cpp23_8cpp_ae1bb52038385591c2d583cbc1dc0b85d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_aa8bd18593d35cc10789a7f0ca6899d7c}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_cpp\_class\_ndebug@{test\_cpp\_class\_ndebug}}
+\index{test\_cpp\_class\_ndebug@{test\_cpp\_class\_ndebug}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_cpp\_class\_ndebug()}{test\_cpp\_class\_ndebug()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_aa8bd18593d35cc10789a7f0ca6899d7c} 
+void test\+\_\+cpp\+\_\+class\+\_\+ndebug (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__ndebug__cpp23_8cpp_aa8bd18593d35cc10789a7f0ca6899d7c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{test__debug__ndebug__cpp23_8cpp_aa8bd18593d35cc10789a7f0ca6899d7c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ae89bb12596822343c293088e48b82f99}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_definitions\_ndebug\_cpp@{test\_definitions\_ndebug\_cpp}}
+\index{test\_definitions\_ndebug\_cpp@{test\_definitions\_ndebug\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_definitions\_ndebug\_cpp()}{test\_definitions\_ndebug\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ae89bb12596822343c293088e48b82f99} 
+void test\+\_\+definitions\+\_\+ndebug\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{test__debug__ndebug__cpp23_8cpp_ae89bb12596822343c293088e48b82f99_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_a4bcc0216a15bdf4375a9238c508ee86d}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_exit\_return\_cpp@{test\_exit\_return\_cpp}}
+\index{test\_exit\_return\_cpp@{test\_exit\_return\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_exit\_return\_cpp()}{test\_exit\_return\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_a4bcc0216a15bdf4375a9238c508ee86d} 
+int test\+\_\+exit\+\_\+return\+\_\+cpp (\begin{DoxyParamCaption}\item[{int}]{n}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__ndebug__cpp23_8cpp_a4bcc0216a15bdf4375a9238c508ee86d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_afe237ae653fee1cd296bb801d4f01ae9}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_function\_tracing\_noop\_cpp@{test\_function\_tracing\_noop\_cpp}}
+\index{test\_function\_tracing\_noop\_cpp@{test\_function\_tracing\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_function\_tracing\_noop\_cpp()}{test\_function\_tracing\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_afe237ae653fee1cd296bb801d4f01ae9} 
+void test\+\_\+function\+\_\+tracing\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test__debug__ndebug__cpp23_8cpp_afe237ae653fee1cd296bb801d4f01ae9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{test__debug__ndebug__cpp23_8cpp_afe237ae653fee1cd296bb801d4f01ae9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_abe35d450753298b8bc0860cf48ef96d1}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_log\_macros\_noop\_cpp@{test\_log\_macros\_noop\_cpp}}
+\index{test\_log\_macros\_noop\_cpp@{test\_log\_macros\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_log\_macros\_noop\_cpp()}{test\_log\_macros\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_abe35d450753298b8bc0860cf48ef96d1} 
+void test\+\_\+log\+\_\+macros\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{test__debug__ndebug__cpp23_8cpp_abe35d450753298b8bc0860cf48ef96d1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ad526b54e826f658ccf773671a5187f34}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_loop\_macros\_noop\_cpp@{test\_loop\_macros\_noop\_cpp}}
+\index{test\_loop\_macros\_noop\_cpp@{test\_loop\_macros\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_loop\_macros\_noop\_cpp()}{test\_loop\_macros\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ad526b54e826f658ccf773671a5187f34} 
+void test\+\_\+loop\+\_\+macros\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{test__debug__ndebug__cpp23_8cpp_ad526b54e826f658ccf773671a5187f34_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_a01c1852611202130ff4da82279419542}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_memory\_functions\_cpp@{test\_memory\_functions\_cpp}}
+\index{test\_memory\_functions\_cpp@{test\_memory\_functions\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_memory\_functions\_cpp()}{test\_memory\_functions\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_a01c1852611202130ff4da82279419542} 
+void test\+\_\+memory\+\_\+functions\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{test__debug__ndebug__cpp23_8cpp_a01c1852611202130ff4da82279419542_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_a036e6fe506b4e091fdd4afed11f4324e}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!test\_var\_ptr\_noop\_cpp@{test\_var\_ptr\_noop\_cpp}}
+\index{test\_var\_ptr\_noop\_cpp@{test\_var\_ptr\_noop\_cpp}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{test\_var\_ptr\_noop\_cpp()}{test\_var\_ptr\_noop\_cpp()}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_a036e6fe506b4e091fdd4afed11f4324e} 
+void test\+\_\+var\+\_\+ptr\+\_\+noop\+\_\+cpp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=283pt]{test__debug__ndebug__cpp23_8cpp_a036e6fe506b4e091fdd4afed11f4324e_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_ac416cbab22199a47838dc6de83be2b25}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!tests\_failed@{tests\_failed}}
+\index{tests\_failed@{tests\_failed}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{tests\_failed}{tests\_failed}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_ac416cbab22199a47838dc6de83be2b25} 
+int tests\+\_\+failed = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{test__debug__ndebug__cpp23_8cpp_abf0c823d1963d8f0376e85f1b4973fb5}\index{test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}!tests\_passed@{tests\_passed}}
+\index{tests\_passed@{tests\_passed}!test\_debug\_ndebug\_cpp23.cpp@{test\_debug\_ndebug\_cpp23.cpp}}
+\doxysubsubsection{\texorpdfstring{tests\_passed}{tests\_passed}}
+{\footnotesize\ttfamily \label{test__debug__ndebug__cpp23_8cpp_abf0c823d1963d8f0376e85f1b4973fb5} 
+int tests\+\_\+passed = 0\hspace{0.3cm}{\ttfamily [static]}}
+

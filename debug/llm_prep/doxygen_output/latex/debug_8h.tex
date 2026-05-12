@@ -1,0 +1,522 @@
+\doxysection{debug.\+h File Reference}
+\hypertarget{debug_8h}{}\label{debug_8h}\index{debug.h@{debug.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$execinfo.\+h$>$}\newline
+Include dependency graph for debug.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{debug_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{debug_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\+\_\+\+LEVEL}}~5
+\item 
+\#define \mbox{\hyperlink{debug_8h_aced66975c154ea0e2a8ec3bc818b4e08}{LOG\+\_\+\+ERROR}}~1
+\item 
+\#define \mbox{\hyperlink{debug_8h_aea3f57d6dcc5b4ac957e2679e87dde27}{LOG\+\_\+\+WARN}}~2
+\item 
+\#define \mbox{\hyperlink{debug_8h_aeb4f36db01bd128c7afeac5889dac311}{LOG\+\_\+\+INFO}}~3
+\item 
+\#define \mbox{\hyperlink{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}{LOG\+\_\+\+DEBUG}}~4
+\item 
+\#define \mbox{\hyperlink{debug_8h_af7abc145380f1916838e42f9272aa0f6}{LOG\+\_\+\+TRACE}}~5
+\item 
+\#define \mbox{\hyperlink{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}{DEBUG\+\_\+\+LOG}}(level,  fmt, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a98f6ecefbf7613a2478356d30af16020}{DEBUG\+\_\+\+TRACE}}(fmt, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a4dfe611cd510765fa861a8a5c363a488}{DEBUG\+\_\+\+DEBUG}}(fmt, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a622294e3e1b45ac441e1ae9e4d1b0f1b}{DEBUG\+\_\+\+INFO}}(fmt, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a1c1152d5c51d29a71356fb4cdaaaf09a}{DEBUG\+\_\+\+WARN}}(fmt, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a8de26a5f28d5e8bd950a52e2199f5169}{DEBUG\+\_\+\+ERROR}}(fmt, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_ad436983ffedf03cac3319ae375fafe6f}{DEBUG\+\_\+\+ENTER}}(...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a8d135fe3e758d3b7614e14753404ad6d}{\+\_\+\+DEBUG\+\_\+\+EXIT\+\_\+\+PRINT}}(ret)
+\item 
+\#define \mbox{\hyperlink{debug_8h_accabae8d5c10fcc5f64cfe945f3bc00b}{DEBUG\+\_\+\+EXIT}}(ret)
+\item 
+\#define \mbox{\hyperlink{debug_8h_ab4ecd51e817cfbb17613b42d179374f4}{\+\_\+\+GENERIC\+\_\+\+FMT}}(x)
+\item 
+\#define \mbox{\hyperlink{debug_8h_abbafc8ba610866f3ec17a6ccc8e5094c}{DEBUG\+\_\+\+VAR}}(var)
+\item 
+\#define \mbox{\hyperlink{debug_8h_aad451395d2f2de3415f63402fd4af4af}{DEBUG\+\_\+\+PTR}}(ptr,  size\+\_\+desc)
+\item 
+\#define \mbox{\hyperlink{debug_8h_aed4a793bc1fd7e86758fe0f5f51ef2d4}{DEBUG\+\_\+\+MALLOC}}(size)
+\item 
+\#define \mbox{\hyperlink{debug_8h_aaa3c9af822d9f0273b115eafd23120f9}{DEBUG\+\_\+\+FREE}}(ptr)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a7828cd0c0196482516103f2170a4449c}{DEBUG\+\_\+\+ASSERT}}(expr, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_acce9842a537fac04d2c738936ca696d9}{DEBUG\+\_\+\+CHECK}}(expr, ...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a6d6c2905ecec1ebe422cba349da9f4b3}{\+\_\+\+DEBUG\+\_\+\+BACKTRACE}}()
+\item 
+\#define \mbox{\hyperlink{debug_8h_a6b67b4e7f4ee0283c40c0b92b3437ce0}{DEBUG\+\_\+\+BACKTRACE}}()
+\item 
+\#define \mbox{\hyperlink{debug_8h_a0f722bf86505c5431e71505f46b5fd21}{DEBUG\+\_\+\+BREAK}}()
+\item 
+\#define \mbox{\hyperlink{debug_8h_ac196b3536158ba5acf37c4d107ef75d6}{DEBUG\+\_\+\+SCOPE\+\_\+\+BEGIN}}()
+\item 
+\#define \mbox{\hyperlink{debug_8h_a176d0a120a0c02480511ff813de9f697}{DEBUG\+\_\+\+SCOPE\+\_\+\+END}}()
+\item 
+\#define \mbox{\hyperlink{debug_8h_a6b40dc2d6d5854b9bc6efa2037097abb}{DEBUG\+\_\+\+IF}}(expr)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a08b3353436cf0a3b6ebb83e5b4776e88}{DEBUG\+\_\+\+LOOP\+\_\+\+START}}(...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a4f72123de16a16aa3aec02583cc977fa}{DEBUG\+\_\+\+LOOP\+\_\+\+ITER}}(i,  total)
+\item 
+\#define \mbox{\hyperlink{debug_8h_adf730e73e95137fe55629cefc4fdcabf}{DEBUG\+\_\+\+LOOP\+\_\+\+END}}(...)
+\item 
+\#define \mbox{\hyperlink{debug_8h_a7bef6636b2f59ef28b6334ca6f559c75}{DEBUG\+\_\+\+ABORT}}(msg, ...)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{debug_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{debug_8h_a6d6c2905ecec1ebe422cba349da9f4b3}\index{debug.h@{debug.h}!\_DEBUG\_BACKTRACE@{\_DEBUG\_BACKTRACE}}
+\index{\_DEBUG\_BACKTRACE@{\_DEBUG\_BACKTRACE}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{\_DEBUG\_BACKTRACE}{\_DEBUG\_BACKTRACE}}
+{\footnotesize\ttfamily \label{debug_8h_a6d6c2905ecec1ebe422cba349da9f4b3} 
+\#define \+\_\+\+DEBUG\+\_\+\+BACKTRACE(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ \_bt[32];\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \_np\ =\ backtrace(\_bt,\ 32);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}**\ \_syms\ =\ backtrace\_symbols(\_bt,\ \_np);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (\_syms)\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_ERROR(\textcolor{stringliteral}{"{}BACKTRACE\ (\%d\ frames):"{}},\ \_np);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ for\ (\textcolor{keywordtype}{int}\ \_i\ =\ 0;\ \_i\ <\ \_np;\ ++\_i)\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_ERROR(\textcolor{stringliteral}{"{}\ \ \#\%d:\ \%s"{}},\ \_i,\ \_syms[\_i]);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ free(\_syms);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a8d135fe3e758d3b7614e14753404ad6d}\index{debug.h@{debug.h}!\_DEBUG\_EXIT\_PRINT@{\_DEBUG\_EXIT\_PRINT}}
+\index{\_DEBUG\_EXIT\_PRINT@{\_DEBUG\_EXIT\_PRINT}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{\_DEBUG\_EXIT\_PRINT}{\_DEBUG\_EXIT\_PRINT}}
+{\footnotesize\ttfamily \label{debug_8h_a8d135fe3e758d3b7614e14753404ad6d} 
+\#define \+\_\+\+DEBUG\+\_\+\+EXIT\+\_\+\+PRINT(\begin{DoxyParamCaption}\item[{}]{ret}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \_Generic((ret),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{}},\ \#ret,\ (\textcolor{keywordtype}{void}*)(ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%d)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%u)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%ld)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%lu)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%f)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%s)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{}},\ \#ret,\ (ret))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_ab4ecd51e817cfbb17613b42d179374f4}\index{debug.h@{debug.h}!\_GENERIC\_FMT@{\_GENERIC\_FMT}}
+\index{\_GENERIC\_FMT@{\_GENERIC\_FMT}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{\_GENERIC\_FMT}{\_GENERIC\_FMT}}
+{\footnotesize\ttfamily \label{debug_8h_ab4ecd51e817cfbb17613b42d179374f4} 
+\#define \+\_\+\+GENERIC\+\_\+\+FMT(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \_Generic((x),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{stringliteral}{"{}\%p"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}:\ \textcolor{stringliteral}{"{}\%d"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}:\ \textcolor{stringliteral}{"{}\%u"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{long}:\ \textcolor{stringliteral}{"{}\%ld"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}:\ \textcolor{stringliteral}{"{}\%lu"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{double}:\ \textcolor{stringliteral}{"{}\%f"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{char}*:\ \textcolor{stringliteral}{"{}\%s"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}*:\ \textcolor{stringliteral}{"{}\%p"{}}\ \(\backslash\)}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a7bef6636b2f59ef28b6334ca6f559c75}\index{debug.h@{debug.h}!DEBUG\_ABORT@{DEBUG\_ABORT}}
+\index{DEBUG\_ABORT@{DEBUG\_ABORT}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_ABORT}{DEBUG\_ABORT}}
+{\footnotesize\ttfamily \label{debug_8h_a7bef6636b2f59ef28b6334ca6f559c75} 
+\#define DEBUG\+\_\+\+ABORT(\begin{DoxyParamCaption}\item[{}]{msg}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ DEBUG\_ERROR(\textcolor{stringliteral}{"{}ABORT:\ "{}}\ msg\ \textcolor{stringliteral}{"{}\ "{}}\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \_DEBUG\_BACKTRACE();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ abort();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a7828cd0c0196482516103f2170a4449c}\index{debug.h@{debug.h}!DEBUG\_ASSERT@{DEBUG\_ASSERT}}
+\index{DEBUG\_ASSERT@{DEBUG\_ASSERT}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_ASSERT}{DEBUG\_ASSERT}}
+{\footnotesize\ttfamily \label{debug_8h_a7828cd0c0196482516103f2170a4449c} 
+\#define DEBUG\+\_\+\+ASSERT(\begin{DoxyParamCaption}\item[{}]{expr}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_ERROR(\textcolor{stringliteral}{"{}ASSERT\ FAILED:\ "{}}\ \#expr\ \textcolor{stringliteral}{"{}.\ "{}}\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \_DEBUG\_BACKTRACE();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ assert(expr);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a6b67b4e7f4ee0283c40c0b92b3437ce0}\index{debug.h@{debug.h}!DEBUG\_BACKTRACE@{DEBUG\_BACKTRACE}}
+\index{DEBUG\_BACKTRACE@{DEBUG\_BACKTRACE}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_BACKTRACE}{DEBUG\_BACKTRACE}}
+{\footnotesize\ttfamily \label{debug_8h_a6b67b4e7f4ee0283c40c0b92b3437ce0} 
+\#define DEBUG\+\_\+\+BACKTRACE(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{debug_8h_a6d6c2905ecec1ebe422cba349da9f4b3}{\_DEBUG\_BACKTRACE}}()}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a0f722bf86505c5431e71505f46b5fd21}\index{debug.h@{debug.h}!DEBUG\_BREAK@{DEBUG\_BREAK}}
+\index{DEBUG\_BREAK@{DEBUG\_BREAK}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_BREAK}{DEBUG\_BREAK}}
+{\footnotesize\ttfamily \label{debug_8h_a0f722bf86505c5431e71505f46b5fd21} 
+\#define DEBUG\+\_\+\+BREAK(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ DEBUG\_TRACE(\textcolor{stringliteral}{"{}BREAKPOINT\ at\ \%s:\%d\ \%s"{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \_\_builtin\_trap();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_acce9842a537fac04d2c738936ca696d9}\index{debug.h@{debug.h}!DEBUG\_CHECK@{DEBUG\_CHECK}}
+\index{DEBUG\_CHECK@{DEBUG\_CHECK}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_CHECK}{DEBUG\_CHECK}}
+{\footnotesize\ttfamily \label{debug_8h_acce9842a537fac04d2c738936ca696d9} 
+\#define DEBUG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{expr}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_WARN(\textcolor{stringliteral}{"{}CHECK\ FAILED\ (continuing):\ "{}}\ \#expr\ \textcolor{stringliteral}{"{}.\ "{}}\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \_DEBUG\_BACKTRACE();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a4dfe611cd510765fa861a8a5c363a488}\index{debug.h@{debug.h}!DEBUG\_DEBUG@{DEBUG\_DEBUG}}
+\index{DEBUG\_DEBUG@{DEBUG\_DEBUG}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_DEBUG}{DEBUG\_DEBUG}}
+{\footnotesize\ttfamily \label{debug_8h_a4dfe611cd510765fa861a8a5c363a488} 
+\#define DEBUG\+\_\+\+DEBUG(\begin{DoxyParamCaption}\item[{}]{fmt}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}{DEBUG\_LOG}}(\mbox{\hyperlink{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}{LOG\_DEBUG}},\ fmt,\ \#\#\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_ad436983ffedf03cac3319ae375fafe6f}\index{debug.h@{debug.h}!DEBUG\_ENTER@{DEBUG\_ENTER}}
+\index{DEBUG\_ENTER@{DEBUG\_ENTER}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_ENTER}{DEBUG\_ENTER}}
+{\footnotesize\ttfamily \label{debug_8h_ad436983ffedf03cac3319ae375fafe6f} 
+\#define DEBUG\+\_\+\+ENTER(\begin{DoxyParamCaption}\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{debug_8h_a98f6ecefbf7613a2478356d30af16020}{DEBUG\_TRACE}}(\textcolor{stringliteral}{"{}ENTER\ "{}}\ \_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a8de26a5f28d5e8bd950a52e2199f5169}\index{debug.h@{debug.h}!DEBUG\_ERROR@{DEBUG\_ERROR}}
+\index{DEBUG\_ERROR@{DEBUG\_ERROR}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_ERROR}{DEBUG\_ERROR}}
+{\footnotesize\ttfamily \label{debug_8h_a8de26a5f28d5e8bd950a52e2199f5169} 
+\#define DEBUG\+\_\+\+ERROR(\begin{DoxyParamCaption}\item[{}]{fmt}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}{DEBUG\_LOG}}(\mbox{\hyperlink{debug_8h_aced66975c154ea0e2a8ec3bc818b4e08}{LOG\_ERROR}},\ fmt,\ \#\#\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_accabae8d5c10fcc5f64cfe945f3bc00b}\index{debug.h@{debug.h}!DEBUG\_EXIT@{DEBUG\_EXIT}}
+\index{DEBUG\_EXIT@{DEBUG\_EXIT}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_EXIT}{DEBUG\_EXIT}}
+{\footnotesize\ttfamily \label{debug_8h_accabae8d5c10fcc5f64cfe945f3bc00b} 
+\#define DEBUG\+\_\+\+EXIT(\begin{DoxyParamCaption}\item[{}]{ret}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (\mbox{\hyperlink{debug_8h_af7abc145380f1916838e42f9272aa0f6}{LOG\_TRACE}}\ <=\ \mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}})\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}[TRACE]\ \%s:\%d\ \%s:\ "{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \_Generic((ret),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{}},\ \#ret,\ (\textcolor{keywordtype}{void}*)(uintptr\_t)(ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%d)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%u)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%ld)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%lu)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%f)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%s)\(\backslash\)n"{}},\ \#ret,\ (ret)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{}},\ \#ret,\ (ret))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ );\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ret;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_aaa3c9af822d9f0273b115eafd23120f9}\index{debug.h@{debug.h}!DEBUG\_FREE@{DEBUG\_FREE}}
+\index{DEBUG\_FREE@{DEBUG\_FREE}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_FREE}{DEBUG\_FREE}}
+{\footnotesize\ttfamily \label{debug_8h_aaa3c9af822d9f0273b115eafd23120f9} 
+\#define DEBUG\+\_\+\+FREE(\begin{DoxyParamCaption}\item[{}]{ptr}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (ptr\ \&\&\ (\mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}}\ >=\ \mbox{\hyperlink{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}{LOG\_DEBUG}}))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_TRACE(\textcolor{stringliteral}{"{}FREE\ \%p"{}},\ (\textcolor{keywordtype}{void}*)ptr);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ free(ptr);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (void)0;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a6b40dc2d6d5854b9bc6efa2037097abb}\index{debug.h@{debug.h}!DEBUG\_IF@{DEBUG\_IF}}
+\index{DEBUG\_IF@{DEBUG\_IF}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_IF}{DEBUG\_IF}}
+{\footnotesize\ttfamily \label{debug_8h_a6b40dc2d6d5854b9bc6efa2037097abb} 
+\#define DEBUG\+\_\+\+IF(\begin{DoxyParamCaption}\item[{}]{expr}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (expr\ \&\&\ (\mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}}\ >=\ \mbox{\hyperlink{debug_8h_af7abc145380f1916838e42f9272aa0f6}{LOG\_TRACE}}))}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a622294e3e1b45ac441e1ae9e4d1b0f1b}\index{debug.h@{debug.h}!DEBUG\_INFO@{DEBUG\_INFO}}
+\index{DEBUG\_INFO@{DEBUG\_INFO}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_INFO}{DEBUG\_INFO}}
+{\footnotesize\ttfamily \label{debug_8h_a622294e3e1b45ac441e1ae9e4d1b0f1b} 
+\#define DEBUG\+\_\+\+INFO(\begin{DoxyParamCaption}\item[{}]{fmt}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}{DEBUG\_LOG}}(\mbox{\hyperlink{debug_8h_aeb4f36db01bd128c7afeac5889dac311}{LOG\_INFO}},\ \ fmt,\ \#\#\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}\index{debug.h@{debug.h}!DEBUG\_LEVEL@{DEBUG\_LEVEL}}
+\index{DEBUG\_LEVEL@{DEBUG\_LEVEL}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LEVEL}{DEBUG\_LEVEL}}
+{\footnotesize\ttfamily \label{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137} 
+\#define DEBUG\+\_\+\+LEVEL~5}
+
+\Hypertarget{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}\index{debug.h@{debug.h}!DEBUG\_LOG@{DEBUG\_LOG}}
+\index{DEBUG\_LOG@{DEBUG\_LOG}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LOG}{DEBUG\_LOG}}
+{\footnotesize\ttfamily \label{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d} 
+\#define DEBUG\+\_\+\+LOG(\begin{DoxyParamCaption}\item[{}]{level}{, }\item[{}]{fmt}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ ((level)\ <=\ \mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}})\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ level\_str\ =\ \textcolor{stringliteral}{"{}"{}};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ switch\ (level)\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{debug_8h_aced66975c154ea0e2a8ec3bc818b4e08}{LOG\_ERROR}}:\ level\_str\ =\ \textcolor{stringliteral}{"{}ERROR"{}};\ \textcolor{keywordflow}{break};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{debug_8h_aea3f57d6dcc5b4ac957e2679e87dde27}{LOG\_WARN}}:\ \ level\_str\ =\ \textcolor{stringliteral}{"{}WARN\ "{}};\ \textcolor{keywordflow}{break};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{debug_8h_aeb4f36db01bd128c7afeac5889dac311}{LOG\_INFO}}:\ \ level\_str\ =\ \textcolor{stringliteral}{"{}INFO\ "{}};\ \textcolor{keywordflow}{break};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}{LOG\_DEBUG}}:\ level\_str\ =\ \textcolor{stringliteral}{"{}DEBUG"{}};\ \textcolor{keywordflow}{break};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{debug_8h_af7abc145380f1916838e42f9272aa0f6}{LOG\_TRACE}}:\ level\_str\ =\ \textcolor{stringliteral}{"{}TRACE"{}};\ \textcolor{keywordflow}{break};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}[\%s]\ \%s:\%d\ \%s:\ "{}}\ fmt\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}},\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level\_str,\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_VA\_OPT\_\_(,)\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_adf730e73e95137fe55629cefc4fdcabf}\index{debug.h@{debug.h}!DEBUG\_LOOP\_END@{DEBUG\_LOOP\_END}}
+\index{DEBUG\_LOOP\_END@{DEBUG\_LOOP\_END}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LOOP\_END}{DEBUG\_LOOP\_END}}
+{\footnotesize\ttfamily \label{debug_8h_adf730e73e95137fe55629cefc4fdcabf} 
+\#define DEBUG\+\_\+\+LOOP\+\_\+\+END(\begin{DoxyParamCaption}\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{debug_8h_a98f6ecefbf7613a2478356d30af16020}{DEBUG\_TRACE}}(\textcolor{stringliteral}{"{}LOOP\ END\ "{}}\ \_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a4f72123de16a16aa3aec02583cc977fa}\index{debug.h@{debug.h}!DEBUG\_LOOP\_ITER@{DEBUG\_LOOP\_ITER}}
+\index{DEBUG\_LOOP\_ITER@{DEBUG\_LOOP\_ITER}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LOOP\_ITER}{DEBUG\_LOOP\_ITER}}
+{\footnotesize\ttfamily \label{debug_8h_a4f72123de16a16aa3aec02583cc977fa} 
+\#define DEBUG\+\_\+\+LOOP\+\_\+\+ITER(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{total}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}}\ >=\ \mbox{\hyperlink{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}{LOG\_DEBUG}})\ \mbox{\hyperlink{debug_8h_a4dfe611cd510765fa861a8a5c363a488}{DEBUG\_DEBUG}}(\textcolor{stringliteral}{"{}LOOP\ ITER\ \%d/\%d"{}},\ (\textcolor{keywordtype}{int})(i),\ (\textcolor{keywordtype}{int})(total))}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a08b3353436cf0a3b6ebb83e5b4776e88}\index{debug.h@{debug.h}!DEBUG\_LOOP\_START@{DEBUG\_LOOP\_START}}
+\index{DEBUG\_LOOP\_START@{DEBUG\_LOOP\_START}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_LOOP\_START}{DEBUG\_LOOP\_START}}
+{\footnotesize\ttfamily \label{debug_8h_a08b3353436cf0a3b6ebb83e5b4776e88} 
+\#define DEBUG\+\_\+\+LOOP\+\_\+\+START(\begin{DoxyParamCaption}\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{debug_8h_a98f6ecefbf7613a2478356d30af16020}{DEBUG\_TRACE}}(\textcolor{stringliteral}{"{}LOOP\ START\ "{}}\ \_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_aed4a793bc1fd7e86758fe0f5f51ef2d4}\index{debug.h@{debug.h}!DEBUG\_MALLOC@{DEBUG\_MALLOC}}
+\index{DEBUG\_MALLOC@{DEBUG\_MALLOC}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_MALLOC}{DEBUG\_MALLOC}}
+{\footnotesize\ttfamily \label{debug_8h_aed4a793bc1fd7e86758fe0f5f51ef2d4} 
+\#define DEBUG\+\_\+\+MALLOC(\begin{DoxyParamCaption}\item[{}]{size}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ \_ptr\ =\ malloc(size);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (\_ptr\ \&\&\ (\mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}}\ >=\ \mbox{\hyperlink{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}{LOG\_DEBUG}}))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_TRACE(\textcolor{stringliteral}{"{}MALLOC\ \%p\ (size:\ \%zu\ bytes)"{}},\ \_ptr,\ (\textcolor{keywordtype}{size\_t})(size));\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \_ptr;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \})}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_aad451395d2f2de3415f63402fd4af4af}\index{debug.h@{debug.h}!DEBUG\_PTR@{DEBUG\_PTR}}
+\index{DEBUG\_PTR@{DEBUG\_PTR}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_PTR}{DEBUG\_PTR}}
+{\footnotesize\ttfamily \label{debug_8h_aad451395d2f2de3415f63402fd4af4af} 
+\#define DEBUG\+\_\+\+PTR(\begin{DoxyParamCaption}\item[{}]{ptr}{, }\item[{}]{size\+\_\+desc}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{debug_8h_a98f6ecefbf7613a2478356d30af16020}{DEBUG\_TRACE}}(\textcolor{stringliteral}{"{}PTR\ \%s\ @\ \%p\ (size:\ \%s)"{}},\ \#ptr,\ (\textcolor{keywordtype}{void}*)(ptr),\ size\_desc)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_ac196b3536158ba5acf37c4d107ef75d6}\index{debug.h@{debug.h}!DEBUG\_SCOPE\_BEGIN@{DEBUG\_SCOPE\_BEGIN}}
+\index{DEBUG\_SCOPE\_BEGIN@{DEBUG\_SCOPE\_BEGIN}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_SCOPE\_BEGIN}{DEBUG\_SCOPE\_BEGIN}}
+{\footnotesize\ttfamily \label{debug_8h_ac196b3536158ba5acf37c4d107ef75d6} 
+\#define DEBUG\+\_\+\+SCOPE\+\_\+\+BEGIN(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{debug_8h_ad436983ffedf03cac3319ae375fafe6f}{DEBUG\_ENTER}}()}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a176d0a120a0c02480511ff813de9f697}\index{debug.h@{debug.h}!DEBUG\_SCOPE\_END@{DEBUG\_SCOPE\_END}}
+\index{DEBUG\_SCOPE\_END@{DEBUG\_SCOPE\_END}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_SCOPE\_END}{DEBUG\_SCOPE\_END}}
+{\footnotesize\ttfamily \label{debug_8h_a176d0a120a0c02480511ff813de9f697} 
+\#define DEBUG\+\_\+\+SCOPE\+\_\+\+END(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{debug_8h_accabae8d5c10fcc5f64cfe945f3bc00b}{DEBUG\_EXIT}}((\textcolor{keywordtype}{void})0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a98f6ecefbf7613a2478356d30af16020}\index{debug.h@{debug.h}!DEBUG\_TRACE@{DEBUG\_TRACE}}
+\index{DEBUG\_TRACE@{DEBUG\_TRACE}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_TRACE}{DEBUG\_TRACE}}
+{\footnotesize\ttfamily \label{debug_8h_a98f6ecefbf7613a2478356d30af16020} 
+\#define DEBUG\+\_\+\+TRACE(\begin{DoxyParamCaption}\item[{}]{fmt}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}{DEBUG\_LOG}}(\mbox{\hyperlink{debug_8h_af7abc145380f1916838e42f9272aa0f6}{LOG\_TRACE}},\ fmt,\ \#\#\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_abbafc8ba610866f3ec17a6ccc8e5094c}\index{debug.h@{debug.h}!DEBUG\_VAR@{DEBUG\_VAR}}
+\index{DEBUG\_VAR@{DEBUG\_VAR}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_VAR}{DEBUG\_VAR}}
+{\footnotesize\ttfamily \label{debug_8h_abbafc8ba610866f3ec17a6ccc8e5094c} 
+\#define DEBUG\+\_\+\+VAR(\begin{DoxyParamCaption}\item[{}]{var}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (\mbox{\hyperlink{debug_8h_af7abc145380f1916838e42f9272aa0f6}{LOG\_TRACE}}\ <=\ \mbox{\hyperlink{debug_8h_ac2d33ccaf63f5d5b66552b95426c0137}{DEBUG\_LEVEL}})\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}[TRACE]\ \%s:\%d\ \%s:\ VAR\ \%s\ =\ "{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_,\ \#var);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \_Generic((var),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%p"{}},\ (\textcolor{keywordtype}{void}*)(uintptr\_t)(var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%d"{}},\ (var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%u"{}},\ (var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%ld"{}},\ (var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%lu"{}},\ (var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%f"{}},\ (var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%s"{}},\ (var)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*:\ fprintf(stderr,\ \textcolor{stringliteral}{"{}\%p"{}},\ (var))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ );\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}(0)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a1c1152d5c51d29a71356fb4cdaaaf09a}\index{debug.h@{debug.h}!DEBUG\_WARN@{DEBUG\_WARN}}
+\index{DEBUG\_WARN@{DEBUG\_WARN}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_WARN}{DEBUG\_WARN}}
+{\footnotesize\ttfamily \label{debug_8h_a1c1152d5c51d29a71356fb4cdaaaf09a} 
+\#define DEBUG\+\_\+\+WARN(\begin{DoxyParamCaption}\item[{}]{fmt}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{debug_8h_ac3cfb1dc42d3a88a2e9a550de56ca25d}{DEBUG\_LOG}}(\mbox{\hyperlink{debug_8h_aea3f57d6dcc5b4ac957e2679e87dde27}{LOG\_WARN}},\ \ fmt,\ \#\#\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a}\index{debug.h@{debug.h}!LOG\_DEBUG@{LOG\_DEBUG}}
+\index{LOG\_DEBUG@{LOG\_DEBUG}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_DEBUG}{LOG\_DEBUG}}
+{\footnotesize\ttfamily \label{debug_8h_a6ff63e8955665c4a58b1598f2b07c51a} 
+\#define LOG\+\_\+\+DEBUG~4}
+
+\Hypertarget{debug_8h_aced66975c154ea0e2a8ec3bc818b4e08}\index{debug.h@{debug.h}!LOG\_ERROR@{LOG\_ERROR}}
+\index{LOG\_ERROR@{LOG\_ERROR}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_ERROR}{LOG\_ERROR}}
+{\footnotesize\ttfamily \label{debug_8h_aced66975c154ea0e2a8ec3bc818b4e08} 
+\#define LOG\+\_\+\+ERROR~1}
+
+\Hypertarget{debug_8h_aeb4f36db01bd128c7afeac5889dac311}\index{debug.h@{debug.h}!LOG\_INFO@{LOG\_INFO}}
+\index{LOG\_INFO@{LOG\_INFO}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_INFO}{LOG\_INFO}}
+{\footnotesize\ttfamily \label{debug_8h_aeb4f36db01bd128c7afeac5889dac311} 
+\#define LOG\+\_\+\+INFO~3}
+
+\Hypertarget{debug_8h_af7abc145380f1916838e42f9272aa0f6}\index{debug.h@{debug.h}!LOG\_TRACE@{LOG\_TRACE}}
+\index{LOG\_TRACE@{LOG\_TRACE}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_TRACE}{LOG\_TRACE}}
+{\footnotesize\ttfamily \label{debug_8h_af7abc145380f1916838e42f9272aa0f6} 
+\#define LOG\+\_\+\+TRACE~5}
+
+\Hypertarget{debug_8h_aea3f57d6dcc5b4ac957e2679e87dde27}\index{debug.h@{debug.h}!LOG\_WARN@{LOG\_WARN}}
+\index{LOG\_WARN@{LOG\_WARN}!debug.h@{debug.h}}
+\doxysubsubsection{\texorpdfstring{LOG\_WARN}{LOG\_WARN}}
+{\footnotesize\ttfamily \label{debug_8h_aea3f57d6dcc5b4ac957e2679e87dde27} 
+\#define LOG\+\_\+\+WARN~2}
+

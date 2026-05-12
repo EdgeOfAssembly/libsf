@@ -1,0 +1,30 @@
+\chapter{Project Guidance for debug }
+\hypertarget{md_llm__prep_2project__guidance}{}\label{md_llm__prep_2project__guidance}\index{Project Guidance for debug@{Project Guidance for debug}}
+\label{md_llm__prep_2project__guidance_autotoc_md7}%
+\Hypertarget{md_llm__prep_2project__guidance_autotoc_md7}%
+\hypertarget{md_llm__prep_2project__guidance_autotoc_md8}{}\doxysection{\texorpdfstring{Best Practices}{Best Practices}}\label{md_llm__prep_2project__guidance_autotoc_md8}
+
+\begin{DoxyItemize}
+\item C/\+C++\+: RAII/smart ptrs, no raw alloc. Latest std (C23/\+C++23 feats).
+\item Python\+: PEP8, venv, hints/docstrings.
+\item Asm\+: NASM, extensive comments, SIMD/unroll.
+\item All\+: Secure (no overflows), efficient (profile first).
+\end{DoxyItemize}\hypertarget{md_llm__prep_2project__guidance_autotoc_md9}{}\doxysection{\texorpdfstring{Tools/\+Install (Distro-\/\+Neutral)}{Tools/\+Install (Distro-\/\+Neutral)}}\label{md_llm__prep_2project__guidance_autotoc_md9}
+
+\begin{DoxyItemize}
+\item C/\+C++\+: GCC/binutils (Ubuntu\+: apt install build-\/essential; Fedora\+: dnf groupinstall "{}\+Development Tools"{}; mac\+OS\+: brew install gcc; Arch\+: pacman -\/S base-\/devel).
+\item Python\+: 3.\+12+ (apt install python3; brew install \href{mailto:python@3.12}{\texttt{python@3.\+12}}).
+\item Debug\+: Valgrind (apt install valgrind; brew install valgrind), GDB (apt install gdb; brew install gdb), cppcheck (apt install cppcheck; brew install cppcheck).
+\item Opt\+: perf (Linux kernel tools; apt install linux-\/tools-\/common), gprof (GCC flag).
+\item Asm\+: NASM (apt install nasm; brew install nasm).
+\item Analysis\+: pylint (pip install pylint).
+\item Fetch \doxylink{debug_8h}{debug.\+h}\+: wget/curl the link or search; include in project.
+\end{DoxyItemize}\hypertarget{md_llm__prep_2project__guidance_autotoc_md10}{}\doxysection{\texorpdfstring{QA/\+Debug/\+Opt}{QA/\+Debug/\+Opt}}\label{md_llm__prep_2project__guidance_autotoc_md10}
+
+\begin{DoxyItemize}
+\item QA\+: 80\% test cov (Google\+Test/pytest), static analysis, reviews (DO-\/178C style\+: trace reqs).
+\item Debug\+: ASan/\+UBSan/\+TSan flags, asserts via \doxylink{debug_8h}{debug.\+h} (disabled in release).
+\item Opt\+: Profile (perf), vectorize (-\/ftree-\/vectorize), LTO (-\/flto).
+\end{DoxyItemize}
+
+Use in sessions\+: Paste prompt first, reference guidance. 

@@ -1,0 +1,66 @@
+.
+├── llm_prep
+│   ├── dot_graphs_doxygen
+│   │   ├── debug_8h__incl.dot
+│   │   └── graph_legend.dot
+│   ├── dot_graphs_pyreverse
+│   ├── doxygen_output
+│   │   ├── html
+│   │   │   ├── search
+│   │   │   ├── clipboard.js
+│   │   │   ├── cookie.js
+│   │   │   ├── debug_8h.html
+│   │   │   ├── debug_8h.js
+│   │   │   ├── debug_8h__incl.dot
+│   │   │   ├── debug_8h__incl.map
+│   │   │   ├── debug_8h__incl.md5
+│   │   │   ├── debug_8h__incl.svg
+│   │   │   ├── debug_8h_source.html
+│   │   │   ├── doxygen.css
+│   │   │   ├── doxygen.svg
+│   │   │   ├── doxygen_crawl.html
+│   │   │   ├── dynsections.js
+│   │   │   ├── files.html
+│   │   │   ├── files_dup.js
+│   │   │   ├── globals.html
+│   │   │   ├── globals_defs.html
+│   │   │   ├── graph_legend.dot
+│   │   │   ├── graph_legend.html
+│   │   │   ├── graph_legend.md5
+│   │   │   ├── graph_legend.svg
+│   │   │   ├── index.html
+│   │   │   ├── jquery.js
+│   │   │   ├── menu.js
+│   │   │   ├── menudata.js
+│   │   │   ├── navtree.css
+│   │   │   ├── navtree.js
+│   │   │   ├── navtreedata.js
+│   │   │   ├── navtreeindex0.js
+│   │   │   └── tabs.css
+│   │   └── latex
+│   │       ├── Makefile
+│   │       ├── debug_8h.tex
+│   │       ├── debug_8h__incl.dot
+│   │       ├── debug_8h__incl.md5
+│   │       ├── debug_8h__incl.pdf
+│   │       ├── debug_8h_source.tex
+│   │       ├── doxygen.sty
+│   │       ├── etoc_doxygen.sty
+│   │       ├── files.tex
+│   │       └── refman.tex
+│   ├── codebase_overview.md
+│   ├── codebase_stats.txt
+│   ├── codebase_structure.txt
+│   ├── llm_system_prompt.md
+│   ├── project_guidance.md
+│   └── tags
+├── tests
+│   ├── Makefile
+│   ├── test_debug_c23.c
+│   ├── test_debug_cpp23.cpp
+│   ├── test_debug_ndebug_c23.c
+│   └── test_debug_ndebug_cpp23.cpp
+├── Doxyfile
+└── debug.h
+
+9 directories, 55 files

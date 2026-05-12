@@ -1,0 +1,314 @@
+.\" debug.h man page
+.\" Author: GitHub Copilot
+.\" Date: 2025-12-17
+.\"
+.TH DEBUG.H 3 "December 2025" "version 2.0" "C/C++ Debug Library"
+.SH NAME
+debug.h \- Battle-hardened debugging header for C23/C++23
+.SH SYNOPSIS
+.nf
+.B #define DEBUG_LEVEL 5
+.B #define DEBUG_TIMESTAMPS
+.B #define DEBUG_COLORS
+.B #define DEBUG_THREAD_SAFE
+.B #include <debug.h>
+.fi
+.SH DESCRIPTION
+.B debug.h
+is a feature-complete, header-only debugging library that provides:
+.IP \(bu 2
+Five log levels (TRACE, DEBUG, INFO, WARN, ERROR)
+.IP \(bu 2
+Function entry/exit tracing with return value logging
+.IP \(bu 2
+Type-safe variable inspection using C11 _Generic
+.IP \(bu 2
+Cross-platform backtrace support (Linux, macOS, Windows)
+.IP \(bu 2
+Thread-safe logging with optional mutex
+.IP \(bu 2
+Timestamps in log output
+.IP \(bu 2
+ANSI color output
+.IP \(bu 2
+Output redirection to files or custom handlers
+.IP \(bu 2
+Zero runtime cost when compiled with
+.B -DNDEBUG
+.PP
+.SH CONFIGURATION MACROS
+Define these before including debug.h:
+.TP
+.B DEBUG_LEVEL
+Set verbosity level (0-5). Default is 5 (full). Levels are:
+.RS
+.IP 1
+LOG_ERROR - Error messages only
+.IP 2
+LOG_WARN - Warnings and errors
+.IP 3
+LOG_INFO - Info, warnings, and errors
+.IP 4
+LOG_DEBUG - Debug info and above
+.IP 5
+LOG_TRACE - Full tracing (most verbose)
+.RE
+.TP
+.B DEBUG_TIMESTAMPS
+Enable timestamp prefixes in log output (format: YYYY-MM-DD HH:MM:SS).
+.TP
+.B DEBUG_COLORS
+Enable ANSI color codes in output:
+.RS
+.IP \(bu 2
+ERROR - Red (bold)
+.IP \(bu 2
+WARN - Yellow
+.IP \(bu 2
+INFO - Green
+.IP \(bu 2
+DEBUG - Cyan
+.IP \(bu 2
+TRACE - Magenta
+.RE
+.TP
+.B DEBUG_THREAD_SAFE
+Enable mutex locking for thread-safe logging. Uses pthread on POSIX, std::mutex on C++.
+.TP
+.B NDEBUG
+Standard macro to disable all debug code (zero overhead in release builds).
+.SH LOGGING MACROS
+.TP
+.BI "DEBUG_TRACE(" fmt ", ...);"
+Log message at TRACE level (most verbose).
+.TP
+.BI "DEBUG_DEBUG(" fmt ", ...);"
+Log message at DEBUG level.
+.TP
+.BI "DEBUG_INFO(" fmt ", ...);"
+Log message at INFO level.
+.TP
+.BI "DEBUG_WARN(" fmt ", ...);"
+Log message at WARN level.
+.TP
+.BI "DEBUG_ERROR(" fmt ", ...);"
+Log message at ERROR level (least verbose).
+.TP
+.BI "DEBUG_LOG(" level ", " fmt ", ...);"
+Log message at specified level constant.
+.PP
+.SH FUNCTION TRACING
+.TP
+.BI "DEBUG_ENTER(" fmt ", ...);"
+Log function entry. Place at the beginning of functions.
+.TP
+.BI "DEBUG_EXIT(" return_value ");"
+Log function exit with return value and return. Uses _Generic for type-safe value printing in C.
+.PP
+.B Example:
+.nf
+int factorial(int n) {
+    DEBUG_ENTER("(n=%d)", n);
+    if (n <= 1) DEBUG_EXIT(1);
+    int result = n * factorial(n - 1);
+    DEBUG_EXIT(result);
+}
+.fi
+.SH VARIABLE INSPECTION
+.TP
+.BI "DEBUG_VAR(" variable ");"
+Print variable name and value. Uses _Generic for type-safe formatting of int, unsigned int, long, unsigned long, double, char*, void*.
+.TP
+.BI "DEBUG_PTR(" pointer ", " size_description ");"
+Print pointer address and description string.
+.PP
+.B Example:
+.nf
+int count = 42;
+char *name = "test";
+DEBUG_VAR(count);   // Output: VAR count = 42
+DEBUG_VAR(name);    // Output: VAR name = test
+DEBUG_PTR(name, "5 chars + null");
+.fi
+.SH MEMORY ALLOCATION
+.TP
+.BI "DEBUG_MALLOC(" size ");"
+Wrapper for malloc() that logs allocation address and size.
+.TP
+.BI "DEBUG_FREE(" pointer ");"
+Wrapper for free() that logs the freed pointer.
+.PP
+.B Example:
+.nf
+void *buf = DEBUG_MALLOC(1024);
+// ... use buffer ...
+DEBUG_FREE(buf);
+.fi
+.SH ASSERTIONS
+.TP
+.BI "DEBUG_ASSERT(" expression ", " fmt ", ...);"
+Enhanced assert with backtrace. Aborts if expression is false.
+.TP
+.BI "DEBUG_CHECK(" expression ", " fmt ", ...);"
+Soft check - logs warning with backtrace but continues execution.
+.PP
+.B Example:
+.nf
+DEBUG_ASSERT(ptr != NULL, "Pointer is NULL!");
+DEBUG_CHECK(value >= 0, "Warning: negative value %d", value);
+.fi
+.SH BACKTRACE
+.TP
+.B DEBUG_BACKTRACE();
+Print current stack trace. Requires
+.B -rdynamic
+linker flag for symbols on Linux.
+.PP
+Works on Linux (execinfo.h), macOS (execinfo.h), and Windows (dbghelp).
+.SH LOOP TRACING
+.TP
+.BI "DEBUG_LOOP_START(" fmt ", ...);"
+Mark the start of a loop.
+.TP
+.BI "DEBUG_LOOP_ITER(" index ", " total ");"
+Log loop iteration (at DEBUG level).
+.TP
+.BI "DEBUG_LOOP_END(" fmt ", ...);"
+Mark the end of a loop.
+.PP
+.B Example:
+.nf
+DEBUG_LOOP_START("Processing items");
+for (int i = 0; i < n; i++) {
+    DEBUG_LOOP_ITER(i, n);
+    process(items[i]);
+}
+DEBUG_LOOP_END("Done");
+.fi
+.SH GDB INTEGRATION
+.TP
+.B DEBUG_BREAK();
+Insert a breakpoint using
+.BR __builtin_trap() .
+Triggers SIGTRAP in GDB.
+.TP
+.BI "DEBUG_IF(" expression ") { ... }"
+Conditional block that only executes if expression is true and DEBUG_LEVEL >= LOG_TRACE.
+.SH OUTPUT REDIRECTION
+.TP
+.BI "DEBUG_SET_OUTPUT(" file ");"
+Redirect debug output to specified FILE pointer.
+.TP
+.B DEBUG_RESET_OUTPUT();
+Reset debug output to stderr (default).
+.TP
+.BI "DEBUG_SET_HANDLER(" handler ");"
+Set custom output handler function.
+.PP
+.B Example:
+.nf
+FILE *logfile = fopen("debug.log", "w");
+DEBUG_SET_OUTPUT(logfile);
+DEBUG_INFO("This goes to the file");
+DEBUG_RESET_OUTPUT();
+fclose(logfile);
+.fi
+.SH SCOPE HELPERS
+.TP
+.B DEBUG_SCOPE_BEGIN();
+Equivalent to DEBUG_ENTER() for scope entry.
+.TP
+.B DEBUG_SCOPE_END();
+Equivalent to DEBUG_EXIT((void)0) for scope exit.
+.SH ABORT
+.TP
+.BI "DEBUG_ABORT(" msg ", ...);"
+Log error message with backtrace and call abort(). Useful for unrecoverable errors.
+.SH COMPILATION
+.B Debug build:
+.nf
+gcc -std=c23 -g -O0 -Wall -Wextra -rdynamic -o prog prog.c
+.fi
+.PP
+.B Release build (no debug overhead):
+.nf
+gcc -std=c23 -O2 -DNDEBUG -o prog prog.c
+.fi
+.PP
+.B Thread-safe:
+.nf
+#define DEBUG_THREAD_SAFE
+#include "debug.h"
+// Compile with: -pthread
+.fi
+.SH PLATFORM SUPPORT
+.IP Linux
+Full support including backtrace with symbols (use -rdynamic).
+.IP macOS
+Full support including backtrace.
+.IP Windows
+Full support. MSVC uses CaptureStackBackTrace and dbghelp. MinGW has fallback.
+.SH NOTES
+.IP \(bu 2
+Uses GCC extensions (__PRETTY_FUNCTION__, __builtin_trap()). Works with Clang.
+.IP \(bu 2
+Uses C11 _Generic for type-safe printing (not used in C++ mode).
+.IP \(bu 2
+Uses __VA_OPT__ for clean variadic handling (C23).
+.IP \(bu 2
+Warnings from _Generic in non-matching branches are expected (all branches compile but only one executes).
+.SH EXAMPLE
+.nf
+#define DEBUG_LEVEL 5
+#define DEBUG_TIMESTAMPS
+#define DEBUG_COLORS
+#include "debug.h"
+
+typedef struct {
+    int id;
+    char name[32];
+} User;
+
+User* create_user(int id, const char* name) {
+    DEBUG_ENTER("(id=%d, name=%s)", id, name);
+    
+    User* u = (User*)DEBUG_MALLOC(sizeof(User));
+    DEBUG_ASSERT(u != NULL, "Allocation failed!");
+    
+    u->id = id;
+    strncpy(u->name, name, sizeof(u->name) - 1);
+    u->name[sizeof(u->name) - 1] = '\\0';
+    
+    DEBUG_PTR(u, "User struct");
+    DEBUG_VAR(u->id);
+    DEBUG_EXIT(u);
+}
+
+void process_users(User** users, int count) {
+    DEBUG_ENTER("(count=%d)", count);
+    DEBUG_CHECK(count > 0, "No users to process");
+    
+    DEBUG_LOOP_START("Processing users");
+    for (int i = 0; i < count; i++) {
+        DEBUG_LOOP_ITER(i, count);
+        DEBUG_INFO("Processing user: %s", users[i]->name);
+    }
+    DEBUG_LOOP_END();
+}
+
+int main(void) {
+    User* u = create_user(1, "Alice");
+    if (u) {
+        DEBUG_FREE(u);
+    }
+    return 0;
+}
+.fi
+.SH SEE ALSO
+.BR assert (3),
+.BR backtrace (3),
+.BR pthread_mutex_lock (3)
+.SH AUTHOR
+GitHub Copilot for EdgeOfAssembly/RetroCodeMess
+.SH COPYRIGHT
+MIT License

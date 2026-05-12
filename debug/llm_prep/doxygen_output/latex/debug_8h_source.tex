@@ -1,0 +1,375 @@
+\doxysection{debug.\+h}
+\hypertarget{debug_8h_source}{}\label{debug_8h_source}\mbox{\hyperlink{debug_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ This\ is\ a\ battle-\/hardened,\ feature-\/complete\ debug.h—pushing\ C23/GCC\ limits\ without\ external\ deps\ (except\ GNU\ backtrace).\ It's\ \string~100\%\ compile-\/time\ stripped\ with\ \`{}-\/DNDEBUG`,\ no\ runtime\ cost.\ Tested\ for\ C23\ (uses\ \`{}\_Generic`\ for\ type-\/safe\ printing,\ \`{}\_\_typeof\_\_`\ implicitly\ via\ it).\ When\ compiling,\ use\ -\/std=c23\ or\ for\ older\ GCC\ -\/std=c2x.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ \#\#\#\#\ Core}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ -\/\ **Log\ Levels**:\ TRACE\ (5,\ verbose\ entry/exit/loops)\ →\ DEBUG\ (4)\ →\ INFO\ (3)\ →\ WARN\ (2)\ →\ ERROR\ (1).\ Set\ \`{}DEBUG\_LEVEL=3`\ pre-\/include\ for\ "{}info+"{}\ only.\ All\ variadic,\ thread-\/prints\ to\ stderr\ (add\ \`{}<pthread.h>`\ mutex\ if\ needed).}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ -\/\ **Generic\ Printing**:\ \`{}\_Generic`\ (C23)\ auto-\/formats\ basics\ (int/double/ptr/string/size\_t).\ Logs\ vars\ like\ \`{}DEBUG\_VAR(x)`:\ \`{}[TRACE]\ ...\ VAR\ x\ =\ 42`.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ -\/\ **Backtrace\ on\ Assert/Check/Abort**:\ Captures\ stack\ (up\ to\ 32\ frames)\ with\ symbols\ (compile\ with\ \`{}-\/rdynamic`).\ E.g.,\ failure\ logs:\ \`{}BACKTRACE\ \#0:\ ./app()\ [0x1234]`.}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ -\/\ **Soft\ Checks**:\ \`{}DEBUG\_CHECK(expr,\ "{}msg"{})`—warns\ +\ backtrace\ but\ continues\ (vs.\ aborting\ assert).}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ -\/\ **Loop/Iteration\ Tracing**:\ \`{}DEBUG\_LOOP\_START();\ for(...)\ \{\ DEBUG\_LOOP\_ITER(i,\ n);\ ...\ \}\ DEBUG\_LOOP\_END();`—spams\ iterations\ at\ DEBUG+\ level.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ -\/\ **Custom\ Abort**:\ \`{}DEBUG\_ABORT("{}Panic:\ \%s"{},\ reason)`—logs\ +\ backtrace\ before\ \`{}abort()`\ (core\ dumps\ for\ GDB\ postmortem).}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ -\/\ **Alloc\ Wrappers**:\ Enhanced\ \`{}DEBUG\_MALLOC`/`FREE`—logs\ only\ at\ DEBUG+\ (less\ spam).}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ -\/\ **Variadic\ Everything**:\ All\ macros\ take\ \`{}fmt,\ ...`\ like\ printf;\ extras\ via\ \`{}\_\_VA\_OPT\_\_`\ (C23\ clean).}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ \#\#\#\#\ GDB\ Integration\ (What\ It\ Means\ \&\ How)}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ GDB\ ("{}GNU\ Debugger"{})\ is\ a\ runtime\ tool\ (`gdb\ ./app`).\ This\ header\ makes\ your\ code\ *GDB-\/hyper-\/friendly*:}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ -\/\ **Rich\ Symbols**:\ Compile\ with\ \`{}-\/g`—`\_\_FILE\_\_`/`\_\_LINE\_\_`/`\_\_PRETTY\_FUNCTION\_\_`\ map\ exactly\ to\ source\ (e.g.,\ \`{}bt`\ in\ GDB\ shows\ "{}add()\ at\ file.c:10"{}).}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ -\/\ **Console\ Logs\ in\ GDB**:\ Run\ \`{}gdb\ -\/-\/args\ ./app\ args`;\ logs\ stream\ to\ GDB's\ console\ (`run`\ to\ execute).\ Set\ watchpoints\ on\ vars\ logged\ via\ \`{}DEBUG\_VAR`.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ -\/\ **Breakpoints\ via\ Macro**:\ \`{}DEBUG\_BREAK();`\ calls\ \`{}\_\_builtin\_trap()`\ (GCC)—triggers\ SIGTRAP.\ In\ GDB:\ \`{}break\ file.c:42`\ or\ \`{}catch\ signal\ SIGTRAP`;\ stops\ precisely\ where\ you\ place\ it\ (e.g.,\ on\ assert\ fail).}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ -\/\ **Backtrace\ Synergy**:\ On\ abort,\ \`{}bt`\ in\ GDB\ matches\ logged\ backtrace.\ Use\ \`{}addr2line\ -\/e\ app\ 0x1234`\ for\ addr→source.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ -\/\ **Conditional\ BPs**:\ Wrap\ risky\ code\ in\ \`{}DEBUG\_IF(condition)\ \{\ ...\ \}`—GDB\ ignores\ if\ level\ low,\ but\ you\ can\ \`{}condition\ bpnum\ DEBUG\_LEVEL\ >=\ 4`.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ -\/\ **Pro\ Tip**:\ In\ GDB,\ \`{}set\ logging\ on`\ captures\ logs\ to\ file;\ \`{}python`\ scripts\ can\ hook\ traps\ for\ auto-\/var\ prints.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ \#\#\#\#\ Usage\ Examples\ (C23\ GCC)}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ 1.\ **Basic\ Function\ Tracing**:}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}c}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ \ \ \ \#define\ DEBUG\_LEVEL\ 5\ \ //\ Full\ verbosity}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ \ \ \ \#include\ "{}debug.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ \ \ \ int\ factorial(int\ n)\ \{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_ENTER("{}(n=\%d)"{},\ n);}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_ASSERT(n\ >=\ 0,\ "{}Negative\ input!"{});}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ if\ (n\ <=\ 1)\ \{}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_EXIT(1);}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ int\ res\ =\ n\ *\ factorial(n-\/1);}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_VAR(res);\ \ //\ Logs:\ VAR\ res\ =\ 720}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_EXIT(res);}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *\ \ \ \ \}}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *\ \ \ \ -\/\ Debug\ run:\ Streams\ ENTER/EXIT/VAR/ASSERT\ to\ stderr;\ GDB\ \`{}s`\ steps\ through.}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ *\ 2.\ **Pointer\ +\ Alloc**:}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}c}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ *\ \ \ \ void\ process\_data()\ \{}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ size\_t\ sz\ =\ 1024;}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ char*\ buf\ =\ DEBUG\_MALLOC(sz);\ \ //\ Logs\ alloc}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_PTR(buf,\ "{}1024\ chars"{});\ \ //\ Logs\ ptr\ +\ desc}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ strcpy(buf,\ "{}Hello"{});\ \ //\ ...\ use\ ...}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_FREE(buf);\ \ //\ Logs\ free}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ *\ \ \ \ \}}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ *\ 3.\ **Assert\ +\ Backtrace**:}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}c}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *\ \ \ \ void\ risky()\ \{}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ int*\ p\ =\ NULL;}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_CHECK(p\ !=\ NULL,\ "{}Null\ deref\ risk"{});\ \ //\ Warns\ +\ bt,\ continues}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ *p\ =\ 42;\ \ //\ Or\ trigger\ DEBUG\_ASSERT(p\ !=\ NULL);}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ *\ \ \ \ \}}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ *\ \ \ \ -\/\ On\ fail:\ ERROR\ log\ +\ full\ stack\ (e.g.,\ \`{}\#1:\ risky()\ at\ risky.c:5`).}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ *\ 4.\ **Loops\ +\ Break**:}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}c}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ *\ \ \ \ void\ slow\_loop(int\ n)\ \{}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_LOOP\_START("{}(n=\%d)"{},\ n);}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ for\ (int\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_LOOP\_ITER(i,\ n);\ \ //\ Only\ if\ DEBUG\_LEVEL\ >=4}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ if\ (i\ ==\ 5)\ DEBUG\_BREAK();\ \ //\ GDB\ trap\ here}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ DEBUG\_LOOP\_END();}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *\ \ \ \ \}}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ *\ \ \ \ \`{}\`{}\`{}}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ *\ \#\#\#\#\ Limitations\ \&\ Extensions}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *\ -\/\ **No\ Auto-\/Param/Size**:\ C\ macros\ can't\ introspect\ args/sizes—manual\ passing\ keeps\ it\ fast/portable.\ For\ auto,\ use\ Clang\ plugins\ or\ DTrace.}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ *\ -\/\ **GCC-\/Specific**:\ \`{}\_\_PRETTY\_FUNCTION\_\_`,\ \`{}\_\_builtin\_trap()`,\ backtrace—works\ on\ Clang\ too,\ but\ test.}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ *\ -\/\ **C23\ Nice-\/to-\/Haves**:\ \`{}\_Generic`\ shines\ for\ fmt;\ \`{}\_\_VA\_OPT\_\_`\ cleans\ variadics.}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ *\ -\/\ **Overhead**:\ Debug\ builds:\ \string~5-\/10\%\ slower\ (I/O);\ release:\ zero.}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ *\ -\/\ **More?**\ Add\ \`{}<time.h>`\ for\ timestamps\ (uncomment\ in\ \`{}\_DEBUG\_VLOG`).\ For\ threads,\ wrap\ in\ mutex.\ Want\ C++?\ Port\ to\ templates/RAII.}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ *\ This\ is\ *everything*\ in\ a\ self-\/contained\ header—drop-\/in\ ready.}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#ifndef\ DEBUG\_H}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#define\ DEBUG\_H}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ C23/GCC\ compatibility:\ Uses\ GCC\ extensions\ like\ \_\_PRETTY\_FUNCTION\_\_,\ \_\_typeof\_\_,\ \_\_builtin\_trap()}}
+\DoxyCodeLine{00093\ \textcolor{comment}{//\ Compile\ with:\ gcc\ -\/std=c23\ -\/g\ -\/Wall\ -\/Wextra\ (for\ debug)\ or\ -\/DNDEBUG\ -\/O2\ (for\ release)}}
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ Requires:\ -\/g\ for\ GDB\ integration\ (rich\ symbols/line\ info);\ logs\ appear\ in\ console\ during\ GDB\ sessions}}
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ Optional:\ Link\ with\ -\/rdynamic\ for\ backtrace\ symbols\ (e.g.,\ addr2line\ or\ GDB's\ bt)}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{comment}{//\ Includes\ (minimal\ set;\ add\ more\ as\ needed,\ e.g.,\ <time.h>\ for\ timestamps)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#include\ <stdio.h>}\ \ \ \ \ \textcolor{comment}{//\ fprintf,\ etc.}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#include\ <assert.h>}\ \ \ \ \textcolor{comment}{//\ std\ assert}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#include\ <stdlib.h>}\ \ \ \ \textcolor{comment}{//\ abort,\ malloc/free}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#include\ <string.h>}\ \ \ \ \textcolor{comment}{//\ strlen}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#include\ <stdint.h>}\ \ \ \ \textcolor{comment}{//\ uintptr\_t}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#include\ <execinfo.h>}\ \ \textcolor{comment}{//\ backtrace\ (GNU-\/specific,\ common\ on\ Linux;\ fallback\ if\ unavailable)}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ Optional:\ Define\ DEBUG\_LEVEL\ (0=off,\ 1=error,\ 2=warn,\ 3=info,\ 4=debug,\ 5=trace)}}
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ Default\ to\ 5\ (full)\ if\ not\ set;\ ignored\ if\ NDEBUG\ defined}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#ifndef\ DEBUG\_LEVEL}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#define\ DEBUG\_LEVEL\ 5}}
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ Only\ define\ if\ NDEBUG\ is\ NOT\ set\ (standard\ behavior:\ all\ debug\ compiles\ out)}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#ifndef\ NDEBUG}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{comment}{//\ Log\ levels\ (bitmask\ or\ numeric;\ here\ numeric\ for\ simplicity)}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#define\ LOG\_ERROR\ 1}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#define\ LOG\_WARN\ \ 2}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#define\ LOG\_INFO\ \ 3}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#define\ LOG\_DEBUG\ 4}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#define\ LOG\_TRACE\ 5}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \textcolor{comment}{//\ Core\ variadic\ logger:\ [LEVEL]\ file:line\ func:\ fmt}}
+\DoxyCodeLine{00122\ \textcolor{comment}{//\ Supports\ levels;\ auto-\/prefixes\ timestamp\ if\ <time.h>\ included\ (uncomment\ below)}}
+\DoxyCodeLine{00123\ \textcolor{comment}{//\ Thread-\/unsafe\ (add\ mutex\ if\ multi-\/threaded)}}
+\DoxyCodeLine{00124\ \textcolor{comment}{//\ Note:\ Uses\ fprintf\ directly\ (not\ vfprintf)\ to\ work\ correctly\ in\ macro\ context}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#define\ DEBUG\_LOG(level,\ fmt,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ ((level)\ <=\ DEBUG\_LEVEL)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ const\ char*\ level\_str\ =\ "{}"{};\ \(\backslash\)}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ (level)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ LOG\_ERROR:\ level\_str\ =\ "{}ERROR"{};\ break;\ \(\backslash\)}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ LOG\_WARN:\ \ level\_str\ =\ "{}WARN\ "{};\ break;\ \(\backslash\)}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ LOG\_INFO:\ \ level\_str\ =\ "{}INFO\ "{};\ break;\ \(\backslash\)}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ LOG\_DEBUG:\ level\_str\ =\ "{}DEBUG"{};\ break;\ \(\backslash\)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ case\ LOG\_TRACE:\ level\_str\ =\ "{}TRACE"{};\ break;\ \(\backslash\)}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[\%s]\ \%s:\%d\ \%s:\ "{}\ fmt\ "{}\(\backslash\)n"{},\ \(\backslash\)}}
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level\_str,\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_\ \(\backslash\)}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_VA\_OPT\_\_(,)\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}}
+\DoxyCodeLine{00140\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \textcolor{comment}{//\ Convenience\ level\ macros}}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#define\ DEBUG\_TRACE(fmt,\ ...)\ DEBUG\_LOG(LOG\_TRACE,\ fmt,\ \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#define\ DEBUG\_DEBUG(fmt,\ ...)\ DEBUG\_LOG(LOG\_DEBUG,\ fmt,\ \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#define\ DEBUG\_INFO(fmt,\ ...)\ \ DEBUG\_LOG(LOG\_INFO,\ \ fmt,\ \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#define\ DEBUG\_WARN(fmt,\ ...)\ \ DEBUG\_LOG(LOG\_WARN,\ \ fmt,\ \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00148\ \textcolor{preprocessor}{\#define\ DEBUG\_ERROR(fmt,\ ...)\ DEBUG\_LOG(LOG\_ERROR,\ fmt,\ \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \textcolor{comment}{//\ Function\ tracing:\ ENTER/EXIT\ with\ auto\ param/return\ logging\ (manual\ args\ for\ safety)}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#define\ DEBUG\_ENTER(...)\ \(\backslash\)}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\ \ \ \ DEBUG\_TRACE("{}ENTER\ "{}\ \_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00155\ \textcolor{comment}{//\ C++\ version:\ Use\ simple\ pointer\ print\ for\ return\ values\ (no\ \_Generic\ in\ C++)}}
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#define\ DEBUG\_EXIT(ret)\ \(\backslash\)}}
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00158\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (LOG\_TRACE\ <=\ DEBUG\_LEVEL)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00159\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[TRACE]\ \%s:\%d\ \%s:\ EXIT\ (return:\ \%s)\(\backslash\)n"{},\ \(\backslash\)}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_,\ \#ret);\ \(\backslash\)}}
+\DoxyCodeLine{00161\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}}
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ ret;\ \(\backslash\)}}
+\DoxyCodeLine{00164\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{preprocessor}{\#define\ DEBUG\_VAR(var)\ \(\backslash\)}}
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (LOG\_TRACE\ <=\ DEBUG\_LEVEL)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[TRACE]\ \%s:\%d\ \%s:\ VAR\ \%s\(\backslash\)n"{},\ \(\backslash\)}}
+\DoxyCodeLine{00170\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_,\ \#var);\ \(\backslash\)}}
+\DoxyCodeLine{00171\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}}
+\DoxyCodeLine{00172\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{comment}{//\ Generic\ print\ helper\ -\/\ not\ used\ in\ C++\ but\ defined\ for\ compatibility}}
+\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#define\ \_GENERIC\_FMT(x)\ "{}\%p"{}}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00179\ \textcolor{comment}{//\ C\ version:\ Use\ \_Generic\ for\ type-\/safe\ printing\ (C11/C23\ feature)}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{comment}{//\ Helper\ for\ DEBUG\_EXIT\ -\/\ uses\ \_Generic\ to\ select\ the\ right\ format}}
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#define\ \_DEBUG\_EXIT\_PRINT(ret)\ \(\backslash\)}}
+\DoxyCodeLine{00183\ \textcolor{preprocessor}{\ \ \ \ \_Generic((ret),\ \(\backslash\)}}
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ default:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{},\ \#ret,\ (void*)(ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00185\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ int:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%d)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ unsigned\ int:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%u)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00187\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ long:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%ld)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ unsigned\ long:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%lu)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00189\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ double:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%f)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00190\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ char*:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%s)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ void*:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{},\ \#ret,\ (ret))\ \(\backslash\)}}
+\DoxyCodeLine{00192\ \textcolor{preprocessor}{\ \ \ \ )}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\#define\ DEBUG\_EXIT(ret)\ \(\backslash\)}}
+\DoxyCodeLine{00195\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (LOG\_TRACE\ <=\ DEBUG\_LEVEL)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[TRACE]\ \%s:\%d\ \%s:\ "{},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_);\ \(\backslash\)}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \_Generic((ret),\ \(\backslash\)}}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ default:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{},\ \#ret,\ (void*)(uintptr\_t)(ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00200\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ int:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%d)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ unsigned\ int:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%u)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ long:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%ld)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ unsigned\ long:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%lu)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ double:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%f)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00205\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ char*:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%s)\(\backslash\)n"{},\ \#ret,\ (ret)),\ \(\backslash\)}}
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ void*:\ fprintf(stderr,\ "{}EXIT\ (return:\ \%s\ =\ \%p)\(\backslash\)n"{},\ \#ret,\ (ret))\ \(\backslash\)}}
+\DoxyCodeLine{00207\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ );\ \(\backslash\)}}
+\DoxyCodeLine{00208\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}}
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00210\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ ret;\ \(\backslash\)}}
+\DoxyCodeLine{00211\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \textcolor{comment}{//\ Generic\ print\ helper\ (C23/GCC\ \_\_typeof\_\_;\ supports\ basics:\ int,\ double,\ ptr,\ char*,\ size\_t)}}
+\DoxyCodeLine{00214\ \textcolor{comment}{//\ Note:\ \_GENERIC\_FMT\ cannot\ be\ used\ in\ string\ concatenation,\ so\ we\ use\ inline\ \_Generic\ for\ VAR/PTR}}
+\DoxyCodeLine{00215\ \textcolor{comment}{//\ Note:\ size\_t\ removed\ as\ it's\ typedef\ to\ unsigned\ long\ on\ most\ platforms\ (causes\ \_Generic\ conflict)}}
+\DoxyCodeLine{00216\ \textcolor{preprocessor}{\#define\ \_GENERIC\_FMT(x)\ \_Generic((x),\ \(\backslash\)}}
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\ \ \ \ default:\ "{}\%p"{},\ \(\backslash\)}}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\ \ \ \ int:\ "{}\%d"{},\ \(\backslash\)}}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\ \ \ \ unsigned\ int:\ "{}\%u"{},\ \(\backslash\)}}
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\ \ \ \ long:\ "{}\%ld"{},\ \(\backslash\)}}
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\ \ \ \ unsigned\ long:\ "{}\%lu"{},\ \(\backslash\)}}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\ \ \ \ double:\ "{}\%f"{},\ \(\backslash\)}}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\ \ \ \ char*:\ "{}\%s"{},\ \(\backslash\)}}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\ \ \ \ void*:\ "{}\%p"{}\ \(\backslash\)}}
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{)}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\#define\ DEBUG\_VAR(var)\ \(\backslash\)}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (LOG\_TRACE\ <=\ DEBUG\_LEVEL)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ "{}[TRACE]\ \%s:\%d\ \%s:\ VAR\ \%s\ =\ "{},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_,\ \#var);\ \(\backslash\)}}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \_Generic((var),\ \(\backslash\)}}
+\DoxyCodeLine{00232\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ default:\ fprintf(stderr,\ "{}\%p"{},\ (void*)(uintptr\_t)(var)),\ \(\backslash\)}}
+\DoxyCodeLine{00233\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ int:\ fprintf(stderr,\ "{}\%d"{},\ (var)),\ \(\backslash\)}}
+\DoxyCodeLine{00234\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ unsigned\ int:\ fprintf(stderr,\ "{}\%u"{},\ (var)),\ \(\backslash\)}}
+\DoxyCodeLine{00235\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ long:\ fprintf(stderr,\ "{}\%ld"{},\ (var)),\ \(\backslash\)}}
+\DoxyCodeLine{00236\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ unsigned\ long:\ fprintf(stderr,\ "{}\%lu"{},\ (var)),\ \(\backslash\)}}
+\DoxyCodeLine{00237\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ double:\ fprintf(stderr,\ "{}\%f"{},\ (var)),\ \(\backslash\)}}
+\DoxyCodeLine{00238\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ char*:\ fprintf(stderr,\ "{}\%s"{},\ (var)),\ \(\backslash\)}}
+\DoxyCodeLine{00239\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ void*:\ fprintf(stderr,\ "{}\%p"{},\ (var))\ \(\backslash\)}}
+\DoxyCodeLine{00240\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ );\ \(\backslash\)}}
+\DoxyCodeLine{00241\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ "{}\(\backslash\)n"{});\ \(\backslash\)}}
+\DoxyCodeLine{00242\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ fflush(stderr);\ \(\backslash\)}}
+\DoxyCodeLine{00243\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00244\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_cplusplus}}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \textcolor{comment}{//\ Pointer\ inspector:\ Value\ +\ size\ (manual\ size;\ for\ auto,\ wrap\ allocs)}}
+\DoxyCodeLine{00249\ \textcolor{preprocessor}{\#define\ DEBUG\_PTR(ptr,\ size\_desc)\ \(\backslash\)}}
+\DoxyCodeLine{00250\ \textcolor{preprocessor}{\ \ \ \ DEBUG\_TRACE("{}PTR\ \%s\ @\ \%p\ (size:\ \%s)"{},\ \#ptr,\ (void*)(ptr),\ size\_desc)}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \textcolor{comment}{//\ Alloc\ wrappers\ (logs\ on\ alloc/free;\ use\ instead\ of\ raw\ malloc/free)}}
+\DoxyCodeLine{00253\ \textcolor{preprocessor}{\#define\ DEBUG\_MALLOC(size)\ \(\backslash\)}}
+\DoxyCodeLine{00254\ \textcolor{preprocessor}{\ \ \ \ (\{\ \(\backslash\)}}
+\DoxyCodeLine{00255\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ void*\ \_ptr\ =\ malloc(size);\ \(\backslash\)}}
+\DoxyCodeLine{00256\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (\_ptr\ \&\&\ (DEBUG\_LEVEL\ >=\ LOG\_DEBUG))\ \(\backslash\)}}
+\DoxyCodeLine{00257\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_TRACE("{}MALLOC\ \%p\ (size:\ \%zu\ bytes)"{},\ \_ptr,\ (size\_t)(size));\ \(\backslash\)}}
+\DoxyCodeLine{00258\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_ptr;\ \(\backslash\)}}
+\DoxyCodeLine{00259\ \textcolor{preprocessor}{\ \ \ \ \})}}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \textcolor{preprocessor}{\#define\ DEBUG\_FREE(ptr)\ \(\backslash\)}}
+\DoxyCodeLine{00262\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00263\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (ptr\ \&\&\ (DEBUG\_LEVEL\ >=\ LOG\_DEBUG))\ \(\backslash\)}}
+\DoxyCodeLine{00264\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_TRACE("{}FREE\ \%p"{},\ (void*)ptr);\ \(\backslash\)}}
+\DoxyCodeLine{00265\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ free(ptr);\ \(\backslash\)}}
+\DoxyCodeLine{00266\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ (void)0;\ \(\backslash\)}}
+\DoxyCodeLine{00267\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \textcolor{comment}{//\ Enhanced\ assert:\ Logs\ failure\ +\ backtrace\ +\ extras,\ then\ aborts\ (GDB-\/catchable)}}
+\DoxyCodeLine{00270\ \textcolor{preprocessor}{\#define\ DEBUG\_ASSERT(expr,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00271\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00272\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00273\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_ERROR("{}ASSERT\ FAILED:\ "{}\ \#expr\ "{}.\ "{}\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}}
+\DoxyCodeLine{00274\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \_DEBUG\_BACKTRACE();\ \(\backslash\)}}
+\DoxyCodeLine{00275\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ assert(expr);\ \(\backslash\)}}
+\DoxyCodeLine{00276\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00277\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \textcolor{comment}{//\ Soft\ check:\ Logs\ but\ continues\ (no\ abort)}}
+\DoxyCodeLine{00280\ \textcolor{preprocessor}{\#define\ DEBUG\_CHECK(expr,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00281\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00282\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00283\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_WARN("{}CHECK\ FAILED\ (continuing):\ "{}\ \#expr\ "{}.\ "{}\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}}
+\DoxyCodeLine{00284\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \_DEBUG\_BACKTRACE();\ \(\backslash\)}}
+\DoxyCodeLine{00285\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \textcolor{comment}{//\ Backtrace\ printer\ (up\ to\ 32\ frames;\ requires\ -\/rdynamic\ for\ symbols)}}
+\DoxyCodeLine{00289\ \textcolor{preprocessor}{\#define\ \_DEBUG\_BACKTRACE()\ \(\backslash\)}}
+\DoxyCodeLine{00290\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00291\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ void*\ \_bt[32];\ \(\backslash\)}}
+\DoxyCodeLine{00292\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ int\ \_np\ =\ backtrace(\_bt,\ 32);\ \(\backslash\)}}
+\DoxyCodeLine{00293\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ char**\ \_syms\ =\ backtrace\_symbols(\_bt,\ \_np);\ \(\backslash\)}}
+\DoxyCodeLine{00294\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (\_syms)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00295\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_ERROR("{}BACKTRACE\ (\%d\ frames):"{},\ \_np);\ \(\backslash\)}}
+\DoxyCodeLine{00296\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ for\ (int\ \_i\ =\ 0;\ \_i\ <\ \_np;\ ++\_i)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00297\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_ERROR("{}\ \ \#\%d:\ \%s"{},\ \_i,\ \_syms[\_i]);\ \(\backslash\)}}
+\DoxyCodeLine{00298\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00299\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ free(\_syms);\ \(\backslash\)}}
+\DoxyCodeLine{00300\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00301\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \textcolor{preprocessor}{\#define\ DEBUG\_BACKTRACE()\ \_DEBUG\_BACKTRACE()}}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \textcolor{comment}{//\ GDB\ integration:\ Breakpoint\ macro\ (traps\ for\ GDB;\ set\ bp\ on\ \_\_builtin\_trap\ or\ sigtrap)}}
+\DoxyCodeLine{00306\ \textcolor{preprocessor}{\#define\ DEBUG\_BREAK()\ \(\backslash\)}}
+\DoxyCodeLine{00307\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00308\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ DEBUG\_TRACE("{}BREAKPOINT\ at\ \%s:\%d\ \%s"{},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_PRETTY\_FUNCTION\_\_);\ \(\backslash\)}}
+\DoxyCodeLine{00309\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_builtin\_trap();\ \(\backslash\)}}
+\DoxyCodeLine{00310\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \textcolor{comment}{//\ Scope\ guard\ (C-\/style\ RAII\ sim:\ enter\ on\ decl,\ exit\ on\ label;\ use\ with\ goto)}}
+\DoxyCodeLine{00313\ \textcolor{preprocessor}{\#define\ DEBUG\_SCOPE\_BEGIN()\ \(\backslash\)}}
+\DoxyCodeLine{00314\ \textcolor{preprocessor}{\ \ \ \ DEBUG\_ENTER()}}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ \textcolor{preprocessor}{\#define\ DEBUG\_SCOPE\_END()\ \(\backslash\)}}
+\DoxyCodeLine{00317\ \textcolor{preprocessor}{\ \ \ \ DEBUG\_EXIT((void)0)\ \ }\textcolor{comment}{//\ Or\ pass\ ret\ if\ needed;\ goto\ label:\ DEBUG\_SCOPE\_END()}}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \textcolor{comment}{//\ Conditional\ compilation\ helpers\ (e.g.,\ for\ perf-\/critical\ code)}}
+\DoxyCodeLine{00320\ \textcolor{preprocessor}{\#define\ DEBUG\_IF(expr)\ if\ (expr\ \&\&\ (DEBUG\_LEVEL\ >=\ LOG\_TRACE))}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \textcolor{comment}{//\ Example:\ Loop/iteration\ logging}}
+\DoxyCodeLine{00323\ \textcolor{preprocessor}{\#define\ DEBUG\_LOOP\_START(...)\ \(\backslash\)}}
+\DoxyCodeLine{00324\ \textcolor{preprocessor}{\ \ \ \ DEBUG\_TRACE("{}LOOP\ START\ "{}\ \_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \textcolor{preprocessor}{\#define\ DEBUG\_LOOP\_ITER(i,\ total)\ \(\backslash\)}}
+\DoxyCodeLine{00327\ \textcolor{preprocessor}{\ \ \ \ if\ (DEBUG\_LEVEL\ >=\ LOG\_DEBUG)\ DEBUG\_DEBUG("{}LOOP\ ITER\ \%d/\%d"{},\ (int)(i),\ (int)(total))}}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \textcolor{preprocessor}{\#define\ DEBUG\_LOOP\_END(...)\ \(\backslash\)}}
+\DoxyCodeLine{00330\ \textcolor{preprocessor}{\ \ \ \ DEBUG\_TRACE("{}LOOP\ END\ "{}\ \_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \textcolor{comment}{//\ Custom\ abort:\ Like\ assert\ but\ with\ message/backtrace\ (GDB-\/friendly)}}
+\DoxyCodeLine{00333\ \textcolor{preprocessor}{\#define\ DEBUG\_ABORT(msg,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00334\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00335\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ DEBUG\_ERROR("{}ABORT:\ "{}\ msg\ "{}\ "{}\ \_\_VA\_ARGS\_\_);\ \(\backslash\)}}
+\DoxyCodeLine{00336\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_DEBUG\_BACKTRACE();\ \(\backslash\)}}
+\DoxyCodeLine{00337\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ abort();\ \(\backslash\)}}
+\DoxyCodeLine{00338\ \textcolor{preprocessor}{\ \ \ \ \}\ while(0)}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \textcolor{preprocessor}{\#else\ \ }\textcolor{comment}{//\ NDEBUG:\ All\ no-\/ops\ (zero\ overhead,\ no\ code\ gen)}}
+\DoxyCodeLine{00341\ }
+\DoxyCodeLine{00342\ \textcolor{comment}{//\ No-\/op\ macros}}
+\DoxyCodeLine{00343\ \textcolor{preprocessor}{\#define\ DEBUG\_TRACE(...)\ do\ \{\}\ while(0)}}
+\DoxyCodeLine{00344\ \textcolor{preprocessor}{\#define\ DEBUG\_DEBUG(...)\ do\ \{\}\ while(0)}}
+\DoxyCodeLine{00345\ \textcolor{preprocessor}{\#define\ DEBUG\_INFO(...)\ \ do\ \{\}\ while(0)}}
+\DoxyCodeLine{00346\ \textcolor{preprocessor}{\#define\ DEBUG\_WARN(...)\ \ do\ \{\}\ while(0)}}
+\DoxyCodeLine{00347\ \textcolor{preprocessor}{\#define\ DEBUG\_ERROR(...)\ do\ \{\}\ while(0)}}
+\DoxyCodeLine{00348\ \textcolor{preprocessor}{\#define\ DEBUG\_LOG(...)\ \ \ do\ \{\}\ while(0)}}
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00350\ \textcolor{preprocessor}{\#define\ DEBUG\_ENTER(...)\ }}
+\DoxyCodeLine{00351\ \textcolor{preprocessor}{\#define\ DEBUG\_EXIT(ret)\ \ return\ ret}}
+\DoxyCodeLine{00352\ \textcolor{preprocessor}{\#define\ DEBUG\_VAR(var)\ \ \ (void)0}}
+\DoxyCodeLine{00353\ \textcolor{preprocessor}{\#define\ DEBUG\_PTR(ptr,\ size\_desc)\ (void)0}}
+\DoxyCodeLine{00354\ \textcolor{preprocessor}{\#define\ DEBUG\_MALLOC(size)\ malloc(size)}}
+\DoxyCodeLine{00355\ \textcolor{preprocessor}{\#define\ DEBUG\_FREE(ptr)\ free(ptr)}}
+\DoxyCodeLine{00356\ \textcolor{preprocessor}{\#define\ DEBUG\_ASSERT(expr,\ ...)\ (void)(expr)}}
+\DoxyCodeLine{00357\ \textcolor{preprocessor}{\#define\ DEBUG\_CHECK(expr,\ ...)\ (void)(expr)}}
+\DoxyCodeLine{00358\ \textcolor{preprocessor}{\#define\ DEBUG\_BACKTRACE()\ (void)0}}
+\DoxyCodeLine{00359\ \textcolor{preprocessor}{\#define\ DEBUG\_BREAK()\ (void)0}}
+\DoxyCodeLine{00360\ \textcolor{preprocessor}{\#define\ DEBUG\_SCOPE\_BEGIN()\ }}
+\DoxyCodeLine{00361\ \textcolor{preprocessor}{\#define\ DEBUG\_SCOPE\_END()\ }}
+\DoxyCodeLine{00362\ \textcolor{preprocessor}{\#define\ DEBUG\_LOOP\_START(...)\ }}
+\DoxyCodeLine{00363\ \textcolor{preprocessor}{\#define\ DEBUG\_LOOP\_ITER(i,\ total)\ }}
+\DoxyCodeLine{00364\ \textcolor{preprocessor}{\#define\ DEBUG\_LOOP\_END(...)\ }}
+\DoxyCodeLine{00365\ \textcolor{preprocessor}{\#define\ DEBUG\_IF(expr)\ if\ (0)}}
+\DoxyCodeLine{00366\ \textcolor{preprocessor}{\#define\ DEBUG\_ABORT(msg,\ ...)\ abort()}}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ NDEBUG}}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ DEBUG\_H}}
+
+\end{DoxyCode}

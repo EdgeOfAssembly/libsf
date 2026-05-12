@@ -1,0 +1,58 @@
+\chapter{LLM-\/\+Ready Codebase Overview — 2025-\/12-\/18 }
+\hypertarget{md_llm__prep_2codebase__overview}{}\label{md_llm__prep_2codebase__overview}\index{LLM-\/Ready Codebase Overview — 2025-\/12-\/18@{LLM-\/Ready Codebase Overview — 2025-\/12-\/18}}
+\label{md_llm__prep_2codebase__overview_autotoc_md0}%
+\Hypertarget{md_llm__prep_2codebase__overview_autotoc_md0}%
+
+
+Project\+: debug\hypertarget{md_llm__prep_2codebase__overview_autotoc_md1}{}\doxysection{\texorpdfstring{Directory Structure}{Directory Structure}}\label{md_llm__prep_2codebase__overview_autotoc_md1}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{.}
+\DoxyCodeLine{├──\ llm\_prep}
+\DoxyCodeLine{│  \ ├──\ dot\_graphs\_doxygen}
+\DoxyCodeLine{│  \ ├──\ dot\_graphs\_pyreverse}
+\DoxyCodeLine{│  \ └──\ codebase\_structure.txt}
+\DoxyCodeLine{└──\ debug.h}
+\DoxyCodeLine{}
+\DoxyCodeLine{4\ directories,\ 2\ files}
+
+\end{DoxyCode}
+\hypertarget{md_llm__prep_2codebase__overview_autotoc_md2}{}\doxysection{\texorpdfstring{Code Statistics}{Code Statistics}}\label{md_llm__prep_2codebase__overview_autotoc_md2}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{github.com/AlDanial/cloc\ v\ 2.00\ \ T=0.01\ s\ (324.0\ files/s,\ 51685.5\ lines/s)}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{Language\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ files\ \ \ \ \ \ \ \ \ \ blank\ \ \ \ \ \ \ \ comment\ \ \ \ \ \ \ \ \ \ \ code}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{C/C++\ Header\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ \ \ 33\ \ \ \ \ \ \ \ \ \ \ \ 116\ \ \ \ \ \ \ \ \ \ \ \ 162}
+\DoxyCodeLine{Text\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ 7}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{SUM:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ \ \ \ 34\ \ \ \ \ \ \ \ \ \ \ \ 116\ \ \ \ \ \ \ \ \ \ \ \ 169}
+\DoxyCodeLine{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+
+\end{DoxyCode}
+\hypertarget{md_llm__prep_2codebase__overview_autotoc_md3}{}\doxysection{\texorpdfstring{Doxygen (C/\+C++ Focus)}{Doxygen (C/\+C++ Focus)}}\label{md_llm__prep_2codebase__overview_autotoc_md3}
+
+\begin{DoxyItemize}
+\item Browse interactive docs\+: {\ttfamily llm\+\_\+prep/doxygen\+\_\+output/html/index.\+html}
+\item Textual DOT graphs (ideal for pasting to LLM)\+:
+\begin{DoxyItemize}
+\item debug\+\_\+8h\+\_\+\+\_\+incl.\+dot (1 KB)
+\item graph\+\_\+legend.\+dot (1 KB)
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_llm__prep_2codebase__overview_autotoc_md4}{}\doxysection{\texorpdfstring{Tags File}{Tags File}}\label{md_llm__prep_2codebase__overview_autotoc_md4}
+
+\begin{DoxyItemize}
+\item {\ttfamily llm\+\_\+prep/tags} generated for symbol navigation.
+\end{DoxyItemize}\hypertarget{md_llm__prep_2codebase__overview_autotoc_md5}{}\doxysection{\texorpdfstring{Generated LLM Files}{Generated LLM Files}}\label{md_llm__prep_2codebase__overview_autotoc_md5}
+
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{llm__system__prompt_8md}{llm\+\_\+system\+\_\+prompt.\+md}}\+: Copy-\/paste as system prompt for sessions.
+\item {\ttfamily \doxylink{project__guidance_8md}{project\+\_\+guidance.\+md}}\+: Best practices, tools, QA, etc.
+\end{DoxyItemize}\hypertarget{md_llm__prep_2codebase__overview_autotoc_md6}{}\doxysection{\texorpdfstring{How to Use with an LLM}{How to Use with an LLM}}\label{md_llm__prep_2codebase__overview_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Paste this entire file as initial context.
+\item For details, paste contents of key {\ttfamily .dot} files (e.\+g., main call graph).
+\item View HTML output for visual graphs. 
+\end{DoxyItemize}
