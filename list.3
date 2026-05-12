@@ -1,0 +1,228 @@
+.TH LIST 3 "January 2025" "list.h" "Library Functions Manual"
+.SH NAME
+list.h \- Doubly\-linked list operations
+.SH SYNOPSIS
+.B #include <list.h>
+
+List Construction and Management:
+.br
+.B void list_clear(list_t *list);
+
+Element Access:
+.br
+.B node_t *list_back(list_t *list);
+.br
+.B node_t *list_front(list_t *list);
+
+Element Insertion:
+.br
+.B void list_insert(list_t *list, void *element, size_t n, type_t type, int position);
+.br
+.B void list_push_back(list_t *list, void *element, size_t n, type_t type);
+.br
+.B void list_push_front(list_t *list, void *element, size_t n, type_t type);
+
+Element Removal:
+.br
+.B node_t *list_erase(list_t *list, int position);
+.br
+.B node_t *list_pop_back(list_t *list);
+.br
+.B node_t *list_pop_front(list_t *list);
+
+Query and Inspection:
+.br
+.B bool list_empty(list_t *list);
+.br
+.B size_t list_size(list_t *list);
+
+Iteration and Navigation:
+.br
+.B node_t *list_begin(list_t *list);
+.br
+.B node_t *list_end(list_t *list);
+
+List Modification:
+.br
+.B void list_merge(list_t *one, list_t *two);
+.br
+.B void list_reverse(list_t *list);
+.br
+.B void list_sort(list_t *list);
+.br
+.B void list_unique(list_t *list);
+.SH DESCRIPTION
+List Construction and Management:
+.RS
+.IP \[bu]
+.B list_clear:
+Removes all elements from the list, freeing all associated memory.
+.RE
+
+Element Access:
+.RS
+.IP \[bu]
+.B list_back:
+Returns the last node in the list. Returns NULL if the list is empty.
+.IP \[bu]
+.B list_front:
+Returns the first node in the list. Returns NULL if the list is empty.
+.RE
+
+Element Insertion:
+.RS
+.IP \[bu]
+.B list_insert:
+Inserts an element at the specified position. If position is out of bounds, the function does nothing.
+.IP \[bu]
+.B list_push_back:
+Adds an element to the end of the list. 
+.IP \[bu]
+.B list_push_front:
+Adds an element to the beginning of the list.
+.RE
+
+Element Removal:
+.RS
+.IP \[bu]
+.B list_erase:
+Removes and returns the node at the specified position. Returns NULL if position is invalid.
+.IP \[bu]
+.B list_pop_back:
+Removes and returns the last node. Returns NULL if the list is empty.
+.IP \[bu]
+.B list_pop_front:
+Removes and returns the first node. Returns NULL if the list is empty.
+.RE
+
+Query and Inspection:
+.RS
+.IP \[bu]
+.B list_empty:
+Returns true if the list has no elements, false otherwise.
+.IP \[bu]
+.B list_size:
+Returns the number of elements in the list.
+.RE
+
+Iteration and Navigation:
+.RS
+.IP \[bu]
+.B list_begin:
+Returns the first node for iteration. Use with caution as it returns NULL if the list is empty.
+.IP \[bu]
+.B list_end:
+Returns the last node for iteration in a doubly-linked list. Returns NULL if the list is empty.
+.RE
+
+List Modification:
+.RS
+.IP \[bu]
+.B list_merge:
+Merges another list into this one, leaving the second list empty. 
+.IP \[bu]
+.B list_reverse:
+Reverses the order of elements in the list.
+.IP \[bu]
+.B list_sort:
+Sorts the elements in the list based on memory comparison. Note: Assumes all elements are of the same size and type.
+.IP \[bu]
+.B list_unique:
+Removes all but the first of consecutive equal elements based on memory comparison.
+
+Additionally, 
+.B list_register_user_type
+can be used to register new user-defined types:
+
+.B void list_register_user_type(type_t *type, size_t size);
+
+.RE
+
+Usage:
+.RS
+.IP \[bu]
+The list is designed to handle any data type through void pointers. Users must manage type safety.
+.IP \[bu]
+When freeing nodes returned by pop or erase operations, use the helper function 
+.B free_node(node_t *node).
+.IP \[bu]
+To iterate over the list, use 
+.B list_begin()
+and continue until you reach 
+.B list_end()
+or NULL.
+.RE
+
+Possible Error Conditions:
+.RS
+.IP \[bu]
+Memory allocation failures could occur in node creation. Functions return NULL or do nothing in such cases.
+.IP \[bu]
+Invalid indices in 
+.B list_insert
+or 
+.B list_erase
+will result in no operation performed.
+.IP \[bu]
+Attempting to access or remove from an empty list might return NULL or lead to unexpected behavior.
+.RE
+.SH EXAMPLE
+Here's an example demonstrating basic usage of the list functions, including registering a user-defined type:
+
+.nf
+#include <stdio.h>
+#include <list.h>
+
+typedef struct {
+    int id;
+    char name[20];
+} Person;
+
+int main() {
+    list_t list = {0};
+    type_t person_type;
+
+    // Register the user-defined type
+    list_register_user_type(&person_type, sizeof(Person));
+
+    // Create and insert a new Person
+    Person p1 = {1, "Alice"};
+    list_push_back(&list, &p1, sizeof(Person), person_type);
+
+    Person p2 = {2, "Bob"};
+    list_push_front(&list, &p2, sizeof(Person), person_type);
+
+    // Print list size
+    printf("List size: %zu\\n", list_size(&list));
+
+    // Print list content
+    for (node_t* node = list_begin(&list); node != NULL; node = node->next) {
+        if (node->type == person_type) {
+            Person *p = (Person*)node->data;
+            printf("Person: ID=%d, Name=%s\\n", p->id, p->name);
+        }
+    }
+
+    // Clean up
+    list_clear(&list);
+    return 0;
+}
+.fi
+
+Program output:
+.RS
+List size: 2
+Person: ID=2, Name=Bob
+Person: ID=1, Name=Alice
+.RE
+.SH SEE ALSO
+.BR malloc (3),
+.BR free (3),
+.BR memcpy (3),
+.BR memcmp (3),
+.BR memset (3)
+.SH BUGS
+Sorting assumes all elements are of the same size and type for comparison.
+.SH AUTHORS
+EdgeOfAssembly
+
